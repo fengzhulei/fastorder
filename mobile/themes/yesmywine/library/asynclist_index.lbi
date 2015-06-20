@@ -1,0 +1,11 @@
+<!-- 商品列表 start-->
+<!--{if $hot_goods}-->
+
+  <dt> <a title="{$hot_goods.name}" class="pimg" href="{$hot_goods.url}"> <img src="{$hot_goods.goods_img}" class="img-thumbnail" alt="{$hot_goods.name}"> </a> </dt>
+  <dd> <a title="{$hot_goods.name}" class="pname" href="{$hot_goods.url}"> {$hot_goods.name}</a>
+    <p class="minprice"> <span class="fuhao"></span><strong><!--{if $hot_goods.promote_price}-->{$hot_goods.promote_price}<!--{else}-->{$hot_goods.shop_price}<!--{/if}--></strong> <del>{$hot_goods.market_price}</del> </p>
+    <p class="c51">{$hot_goods.sales_count}人购买</p>
+  </dd>
+
+<!--{/if}--> 
+<!-- 商品列表 end--> 
