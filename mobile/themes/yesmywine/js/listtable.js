@@ -61,11 +61,103 @@ listTable.filter = new Object;
 listTable.url = location.href.lastIndexOf("?") == -1 ? location.href.substring((location.href.lastIndexOf("/")) + 1) : location.href.substring((location.href.lastIndexOf("/")) + 1, location.href.lastIndexOf("?"));
 listTable.url += "?is_ajax=1";
 
+
+/**
+ * 添加一个产品
+ */
+listTable.addProduct = function(obj, act, id)
+{
+	//检查价格是否正确
+	var txt = getLastDOM("goods_price");
+	
+	if (Utils.trim(txt.value).length > 0)
+    {
+    	var isNumber = Utils.isNumber(Utils.trim(txt.value))
+    	
+    	if(!isNumber)
+		{
+    		txt.focus();
+    		showMsg("tipsmsg",'请输入正确的产品价格');
+    		return;
+		}
+    }
+	else
+	{
+		txt.focus();
+		showMsg("tipsmsg",'请输入价格信息');
+		return;
+	}
+	
+	$.ajax({
+        type: "post",
+        url: "index.php?m=default&c=Category&a=add_goods",     
+        data: $("#goods_form").serialize(),   
+        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+        success: function(data) {
+        	addProductResponse(data);
+        	 
+        },
+        error: function(data) {
+            alert(data);
+        }
+    });
+	
+}
+
+//产品增加成功后，响应函数
+function addProductResponse(data)
+{
+	var obj = JSON.parse(data);
+	showMsg("tipsmsg",obj.message);
+	 if(obj.error == 0)
+	 {		
+         firm();
+	 }        	      	
+	
+}
+
+//弹出一个询问框，询问继续添加 产品还是去查看产品 
+function firm() {  
+    //利用对话框返回的值 （true 或者 false）  
+    if (confirm("产品增加成功，继续添加产品？\r\n点击确定继续添加，点击取消则转到产品列表.")) {  
+    	listTable.resetProduct();  
+    }  
+    else {  
+    	location.href = 'index.php?m=default&c=Category&a=index'; 
+    }  
+
+} 
+
+listTable.resetProduct = function()
+{
+	var obj_goods_name = getLastDOM("goods_name");
+	var obj_goods_price = getLastDOM("goods_price");
+	var obj_goods_brief =getLastDOM("goods_brief");
+	
+	obj_goods_name.value ='';
+	obj_goods_price.value ='';
+	obj_goods_brief.value ='';
+}
 /**
  * 保存产品信息
  */
 listTable.saveProduct = function(obj, act, id)
 {
+	/*
+	//检查价格是否正确
+	var obj_goods_price = getLastDOM("goods_price_"+id);
+	var txt = obj_goods_price.childNodes[0];
+	if (Utils.trim(txt.value).length > 0)
+    {
+    	var isNumber = Utils.isNumber(Utils.trim(txt.value))
+    	
+    	if(!isNumber)
+		{
+    		txt.focus();
+		 showMsg(id,'请输入正确的价格');
+		}
+    }
+	*/
 	var obj_goods_form = getLastDOM("goods_form_"+id);
 
     $.ajax({
@@ -75,12 +167,15 @@ listTable.saveProduct = function(obj, act, id)
         datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
         success: function(data) {
         	 var obj = JSON.parse(data);
-        	var goods = JSON.parse(obj.content);
-        	listTable.span(goods,true);
-            
-            var id = obj.goods_id;            
-            setButtonStatus(id,true);        	
-        	showMsg(id,obj.message);
+        	 if(obj.error == 0)
+    		 {
+        		 var goods = JSON.parse(obj.content);
+             	listTable.span(goods,true);
+                 
+                 var id = obj.goods_id;            
+                 setButtonStatus(id,true);  
+    		 }        	      	
+        	showMsg("tipsmsg_"+id,obj.message);
         },
         error: function(data) {
             alert(data);
@@ -91,7 +186,7 @@ listTable.saveProduct = function(obj, act, id)
 
 function showMsg(id,message)
 {
-	var obj = getLastDOM("tipsmsg_"+id);
+	var obj = getLastDOM(id);
 	$(obj).html(message).show(300).delay(3000).hide(300);
 	//$("#tipsmsg_").html(message);// 这个是渐渐消失 
 	//$("#tipsmsg_"+id).html(message).fadeTo(3000).hide(); //这个是让他显示3秒（实际就是没有改变透明度），然后隐藏 
@@ -258,7 +353,7 @@ listTable.edit = function(obj, act, id)
 	    	if(!isNumber)
 			{
 	    		txt.focus();
-			 showMsg(act,'请输入正确的价格');
+			 showMsg("tipsmsg_"+act,'请输入正确的价格');
 			}
 	    }
 	    else
@@ -362,6 +457,25 @@ listTable.radio = function(obj, act, id)
     }
   }
   */
+}
+
+listTable.generateLink = function(formId,type)
+{
+	var form = document.getElementById(formId);
+	var goodsIds = this.getSelectedId(form);
+	var data = JSON.stringify(goodsIds);
+	$.ajax({
+        type: "post",
+        url: "index.php?m=default&c=Category&a=generate_link",     
+        data: 'goods_ids='+data,   
+        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+        success: function(data) {
+        	alert(data); 
+        },
+        error: function(data) {
+            alert(data);
+        }
+    });
 }
 
 /**
@@ -540,6 +654,26 @@ listTable.selectAll = function(obj, chk)
       elems[i].checked = obj.checked;
     }
   }
+}
+
+listTable.getSelectedId = function(obj)
+{
+	var chk = 'checkboxes';
+	var goodsIds = '';　//创建一个数组
+	var elems = obj;
+
+	  for (var i=0; i < elems.length; i++)
+	  {
+	    if (elems[i].name == chk || elems[i].name == chk + "[]")
+	    {
+	      if(elems[i].checked == true)
+    	  {
+	    	  goodsIds +=elems[i].value+',';
+    	  }
+	    }
+	  }
+	  
+	  return goodsIds;
 }
 
 listTable.compileFilter = function()

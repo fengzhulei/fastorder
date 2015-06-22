@@ -88,7 +88,7 @@ class CategoryController extends CommonController {
         }
         $this->assign('categories', model('CategoryBase')->get_categories_tree($this->cat_id));
 		*/
-        $this->display('category.dwt');
+        $this->display('fastorder_goods.dwt');
     }
 
     /**
@@ -162,6 +162,7 @@ class CategoryController extends CommonController {
     	$type = (isset($type ) && in_array(trim(strtolower($type)), array('on_sale', 'not_on_sale', 'delete', 'all'))) ? trim(strtolower($type)) : 'all';
 		$this->type =$type;
     	$this->assign('type', $type);
+    	$this->assign('act','show_goods');
     	return ;
         
         // 如果分类ID为0，则返回总分类页
@@ -563,7 +564,7 @@ class CategoryController extends CommonController {
             }
         }
     	$start = ($this->page - 1) * $this->size;
-    	$where .=" LIMIT $start , $this->size";
+    	$where .=" order by g.goods_id desc  LIMIT $start , $this->size";
         /* 获得商品列表 */    	
     	
         $sql = 'SELECT g.goods_id, g.goods_name,  g.shop_price AS goods_price, g.goods_brief, g.is_on_sale FROM ' .
@@ -630,25 +631,39 @@ class CategoryController extends CommonController {
 		        'goods_status'=>$_POST ['goods_status']
         );
         
+        if(!is_numeric($goods['goods_price']))
+        {
+        	 $result ['error'] = 1;
+        	 $result ['message'] = '请输入正确的价格';
+            die(json_encode($result));
+        }
+        
         //检查商品是否合法
        $sql= 'SELECT  g.goods_name,  g.shop_price AS goods_price, g.goods_brief, g.is_on_sale FROM ' . $this->model->pre . "goods AS g ". 
         " WHERE g.goods_id = $goods[goods_id] and g.user_id = $_SESSION[user_id] ";
        $res = $this->model->query($sql);
        
+       $name_duplicate = $this->check_goods_name_duplicate($goods['goods_name'],$goods['goods_id']);
        if(empty($res))
        {
        		$result ['error'] = 1;
-       		$result ['message'] = '该商品不存在';
+       		$result ['message'] = '该产品不存在';
+            die(json_encode($result));
+       }
+       else if($name_duplicate)
+       {
+       		$result ['error'] = 1;
+       		$result ['message'] = '该产品 名称已存在，请换一个名称';
             die(json_encode($result));
        }
        else
        {
        	  $sql = 'update ' . $this->model->pre . "goods set ".
        	         " goods_name = '$goods[goods_name]' ,".
-       	  " shop_price = $goods[goods_price] ,".
-       	  " goods_brief = '$goods[goods_brief]' ,".
-       	  " is_on_sale = $goods[goods_status] ".
-       	  " where goods_id = $goods[goods_id] and user_id = $_SESSION[user_id];";
+		       	  " shop_price = $goods[goods_price] ,".
+		       	  " goods_brief = '$goods[goods_brief]' ,".
+		       	  " is_on_sale = $goods[goods_status] ".
+		       	  " where goods_id = $goods[goods_id] and user_id = $_SESSION[user_id];";
        	  
        	  $this->model->query($sql);
        	  
@@ -660,10 +675,127 @@ class CategoryController extends CommonController {
        }
     }
 
+    /*
+     * 删除产品
+     */
     public function  del_goods()
     {
 
     	$goods_id =I('request.goods_id');
      
+    }
+    
+    /**
+     * 增加一个产品
+     * Enter description here ...
+     */
+    public function  add_goods()
+    {
+    	if ($_SERVER ['REQUEST_METHOD'] == 'GET') {
+    		$this->assign('act','add_goods');
+    		$this->assign('page_title','增加产品');
+    		$this->display('fastorder_goods.dwt');
+    	}
+    	else 
+    	{
+    		// 初始化返回数组
+	        $result = array(
+	            'error' => 0,
+	            'message' => '',
+	            'content' => '',
+	            'goods_id' => ''
+	        );
+    		//新增产品
+    		 $goods = array(
+                'goods_name' => empty($_POST ['goods_name']) ? '' : I('post.goods_name'),
+                'shop_price' => empty($_POST ['goods_price']) ? 0: intval($_POST ['goods_price']),
+                'goods_brief' => empty($_POST ['goods_brief']) ? '' : I('post.goods_brief'),
+                'is_on_sale' => empty($_POST ['goods_status']) ? 1 : intval($_POST ['goods_status'])
+                );
+
+             if(!is_numeric($goods['shop_price'])) 
+             {
+             	$result['error'] =1;
+             	$result['message'] ='价格不正确';
+             	die(json_encode($result));
+             }  
+             
+             if($this->check_goods_name_duplicate($goods['goods_name']))
+             {
+             	$result['error'] =1;
+             	$result['message'] ='已经有一个名叫'.$goods['goods_name'].'的产品，请换一个名称';
+             	die(json_encode($result));
+             }
+             
+             $sql = 'insert into '. $this->model->pre . "goods ".
+                    "(goods_name,shop_price,goods_brief,is_on_sale,user_id)".
+		             " values ".
+		             "('$goods[goods_name]',$goods[goods_price],'$goods[goods_brief]',$goods[goods_price],$_SESSION[user_id]);";
+
+             $goods['user_id'] = $_SESSION['user_id'];
+       	  	 $goods_id = model('Goods')->add_goods($goods);
+           	 $result['message'] ='产品增加成功';
+           	 $result['goods_id'] =$goods_id;
+           	 $result['content'] =$goods;
+             die(json_encode($result));
+    	}
+    	
+    	
+    }
+     
+    /*
+     * 检查产品名称是否重复，重复返回true
+     */
+    private  function check_goods_name_duplicate($goods_name,$goods_id = 0)
+    {
+    	$count = model('Goods')->check_goods_name_count($goods_name,$goods_id);
+    	return ($count > 0)? true:false;
+    }
+    
+    /**
+     * 筛选产品，为生成链接做准备
+     * Enter description here ...
+     */
+    public function goods_select()
+    {
+    	$goods_list = model('Goods')->get_user_goods_list();
+    	
+    	$this->assign('goods_list',$goods_list);
+    	$this->assign('act','goods_select');
+    	$this->assign('title','选择产品');
+    	$this->display('goods_show.dwt');
+    }
+    
+    public function generate_link()
+    {    	
+    	$goods_str =rtrim($_POST['goods_ids'],',');
+    	$goods_str = trim($goods_str,'\"');
+    	$goods_str = rtrim($goods_str,',');
+    	$goods_ids =explode(',', $goods_str) ;
+    	$user_id = $_SESSION['user_id'];
+    	
+    	$params['goods_ids'] =$goods_ids;
+    	$params['user_id'] = $user_id;
+    	    	
+    	$base64 = urlsafe_b64encode(serialize($params));
+    	$url = __URL__ . '/index.php?m=default&c=Category&a=goods_show&data=' . $base64;
+    	die($url);
+    }
+    
+	/**
+     * 显示已经生成的链接
+     * Enter description here ...
+     */
+    public function goods_show()
+    {
+    	$data = I('get.data');
+    	$data = unserialize(urlsafe_b64decode($data));
+    	
+    	$goods_list = model('Goods')->get_user_goods_list_byId($data['goods_ids'],$data['user_id']);
+    	
+    	$this->assign('goods_list',$goods_list);
+    	$this->assign('act','goods_show');
+    	$this->assign('title','购买产品');
+    	$this->display('goods_show.dwt');
     }
 }

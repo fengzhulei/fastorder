@@ -1,0 +1,29 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+  <div style="height:4.2em;"></div>
+   <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
+  <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
+  <span>{$title}</span> 
+  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+  </header>
+  
+  <nav class="ect-nav ect-nav-list" style="display:none;"> 
+   <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
+  </nav>
+   <!--{if $act eq 'add_goods'} 新增产品-->
+  		 <!-- #BeginLibraryItem "/library/goods_add.lbi" --><!-- #EndLibraryItem --> </div>
+	 </div>
+		<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+   <!--{else} 默认是列表显示-->
+	   <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem --> </div>
+	</div>
+	<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+	<script type="text/javascript">
+		//get_asynclist('{:url('category/asynclist', array('id'=>$this->_var['id'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}' , '__TPL__/images/loader.gif');
+		get_asynclist('{:url('category/asynclist', array('type'=>$this->_var['type'],'page'=>$this->_var['page']))}' , '__TPL__/images/loader.gif');
+	</script>
+   <!--{/if}-->
+    
+<script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
+</body>
+</html>

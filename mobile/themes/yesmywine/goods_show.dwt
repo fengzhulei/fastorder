@@ -1,0 +1,36 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con goods_warp">
+  <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
+  <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
+  <span>{$title}</span> 
+  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+  </header>
+  
+  <nav class="ect-nav ect-nav-list" style="display:none;"> 
+   <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
+  </nav>
+ </div>
+ 
+ <div class="top_menu_m50" style="margin-top: 50px;">
+<!-- #BeginLibraryItem "/library/goods_show.lbi" --><!-- #EndLibraryItem -->
+ </div>
+ <!--{if $act eq 'goods_select'}-->
+ <table>
+ 	<tr>
+	 <td><button onclick='listTable.generateLink("listForm","send")'>发送给朋友</button></td>
+	 <td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>
+	</tr>
+ </table>
+	
+	 
+ <!--{elseif $act eq 'goods_show'}-->  
+  <!-- #BeginLibraryItem "/library/consignee.lbi" --><!-- #EndLibraryItem -->
+ <!--{/if}-->
+ 
+ <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+ 
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
+
+</body>
+</html>

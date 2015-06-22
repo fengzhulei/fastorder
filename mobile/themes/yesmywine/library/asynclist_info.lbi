@@ -24,8 +24,9 @@
 <dd >
 {$lang.goods_status}：<span id="goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" class="co" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span> 
 <span id="bak_goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" style="display:none" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>   
-
 </dd>
+
+<dd >
 <div style="float:left" >
 <span>{$lang.sort_sales}：<b class="co">{$goods.sales_count}</b></span> 
 </div>

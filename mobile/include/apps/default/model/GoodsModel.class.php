@@ -729,4 +729,53 @@ class GoodsModel extends BaseModel {
         return $res;
     }
 
+    /**
+     * 添加一个产品
+     * Enter description here ...
+     * @param unknown_type $goods
+     */
+    function add_goods($goods)
+    {
+    	$id =$this->insert($goods);
+    	return $id;
+    }
+    
+    /**
+     * 检查产品名称是否重复
+     */
+    function check_goods_name_count($goods_name,$goods_id = 0)
+    {
+    	$sql = 'select count(1) as count from '. $this->pre . "goods ".
+    	"where goods_name ='$goods_name' 
+    	 and  user_id = $_SESSION[user_id] 
+    	 and goods_id <> $goods_id ;";
+    	$count = $this->row($sql);
+    	
+    	return $count['count'];
+    }
+    
+    function get_user_goods_list()
+    {
+    	$sql = 'select goods_id,goods_name,shop_price as goods_price from '. $this->pre . "goods ".
+    	" where user_id = $_SESSION[user_id] 
+    	 and is_on_sale = 1 
+    	 and is_delete = 0 ;";
+    	
+    	$goods_list = $this->query($sql);
+    	return $goods_list;
+    }
+    
+    function get_user_goods_list_byId($goods_ids,$user_id)
+    {
+    	$godds_id_in = db_create_in($goods_ids);
+    	
+    	$sql = 'select goods_id,goods_name,shop_price as goods_price from '. $this->pre . "goods ".
+    	" where goods_id $godds_id_in
+    	 and user_id = $user_id 
+    	 and is_on_sale = 1 
+    	 and is_delete = 0 ;";
+    	
+    	$goods_list = $this->query($sql);
+    	return $goods_list;
+    }
 }
