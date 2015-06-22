@@ -1576,10 +1576,8 @@ function get_goods_count($goods_id)
     /* 查询该商品销量 */
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) as count ' .
         'FROM '. M()->pre .'order_info AS o, '. M()->pre .'order_goods AS g ' .
-        "WHERE o . order_id = g . order_id " .
-        " AND o . order_status = '" . OS_CONFIRMED . "'" .
-        " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
-        " AND o . pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        "WHERE o . order_id = g . order_id " .        
+        " AND o . shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .        
         " AND g . goods_id = '$goods_id'";
     $result = M()->getRow($sql);
     return $result['count'];

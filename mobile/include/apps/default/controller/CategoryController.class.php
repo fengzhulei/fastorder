@@ -44,7 +44,7 @@ class CategoryController extends CommonController {
      */
     public function index() {
         $this->parameter();
-        if (I('get.id', 0) == 0 && CONTROLLER_NAME == 'category') {
+        /*if (I('get.id', 0) == 0 && CONTROLLER_NAME == 'category') {
             $arg = array(
                 'id' => $this->cat_id,
                 'brand' => $this->brand,
@@ -69,16 +69,17 @@ class CategoryController extends CommonController {
         // 获取分类
         $this->assign('category', model('CategoryBase')->get_top_category());
         $count = model('Category')->category_get_count($this->children, $this->brand, $this->type, $this->price_min, $this->price_max, $this->ext);
-
+*/
         $goodslist = $this->category_get_goods();
         $this->assign('goods_list', $goodslist);
-        $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str, 'sort' => $this->sort, 'order' => $this->order)), $this->size);
-        $this->assign('pager', $this->pageShow($count));
+       // $this->pageLimit(url('index', array('id' => $this->cat_id, 'brand' => $this->brand, 'price_max' => $this->price_max, 'price_min' => $this->price_min, 'filter_attr' => $this->filter_attr_str, 'sort' => $this->sort, 'order' => $this->order)), $this->size);
+       // $this->assign('pager', $this->pageShow($count));
 
         /* 页面标题 */
-        $page_info = get_page_title($this->cat_id);
-        $this->assign('ur_here', $page_info['ur_here']);
-        $this->assign('page_title', $page_info['title']);
+       // $page_info = get_page_title($this->cat_id);
+       // $this->assign('ur_here', $page_info['ur_here']);
+        $this->assign('page_title', L('goods_list'));
+        /*
         $cat = model('Category')->get_cat_info($this->cat_id);  // 获得分类的相关信息
         if (!empty($cat['keywords'])) {
             if (!empty($cat['keywords'])) {
@@ -86,7 +87,7 @@ class CategoryController extends CommonController {
             }
         }
         $this->assign('categories', model('CategoryBase')->get_categories_tree($this->cat_id));
-
+		*/
         $this->display('category.dwt');
     }
 
@@ -153,6 +154,16 @@ class CategoryController extends CommonController {
      * 处理参数便于搜索商品信息
      */
     private function parameter() {
+    	
+    	$page_size = C('page_size');
+    	$this->size = intval($page_size) > 0 ? intval($page_size) : 10;
+        $this->page = I('request.page') > 0 ? intval(I('request.page')) : 1;
+        $type = $_GET['type'];
+    	$type = (isset($type ) && in_array(trim(strtolower($type)), array('on_sale', 'not_on_sale', 'delete', 'all'))) ? trim(strtolower($type)) : 'all';
+		$this->type =$type;
+    	$this->assign('type', $type);
+    	return ;
+        
         // 如果分类ID为0，则返回总分类页
         if (empty($this->cat_id)) {
             $this->cat_id = 0;
@@ -492,7 +503,9 @@ class CategoryController extends CommonController {
      * @return array
      */
     private function category_get_goods() {
-        $display = $GLOBALS['display'];
+
+    	/*
+    	$display = $GLOBALS['display'];
         $where = "g.is_on_sale = 1 AND g.is_alone_sale = 1 AND " . "g.is_delete = 0 ";
         if ($this->keywords != '') {
             $where .= " AND (( 1 " . $this->keywords . " ) ) ";
@@ -530,40 +543,45 @@ class CategoryController extends CommonController {
 
         $start = ($this->page - 1) * $this->size;
         $sort = $this->sort == 'sales_volume' ? 'xl.sales_volume' : $this->sort;
-        /* 获得商品列表 */
-        $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' . "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, " . 'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img, xl.sales_volume ' . 'FROM ' . $this->model->pre . 'goods AS g ' . ' LEFT JOIN ' . $this->model->pre . 'touch_goods AS xl ' . ' ON g.goods_id=xl.goods_id ' . ' LEFT JOIN ' . $this->model->pre . 'member_price AS mp ' . "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " . "WHERE $where $this->ext ORDER BY $sort $this->order LIMIT $start , $this->size";
+        */
+    	$where =" WHERE g.user_id = $_SESSION[user_id] ";
+    	
+    	if ($this->type) {
+    		$type = $this->type;
+            switch ($type) {
+                case 'on_sale':
+                    $where .= ' AND g.is_on_sale = 1';
+                    break;
+                case 'not_on_sale':
+                    $where .= ' AND g.is_on_sale = 0';
+                    break;
+                case 'delete':
+                    $where .= ' AND g.is_delete  = 1';
+                    break;                
+                default:
+                    $where .= '';
+            }
+        }
+    	$start = ($this->page - 1) * $this->size;
+    	$where .=" LIMIT $start , $this->size";
+        /* 获得商品列表 */    	
+    	
+        $sql = 'SELECT g.goods_id, g.goods_name,  g.shop_price AS goods_price, g.goods_brief, g.is_on_sale FROM ' .
+         $this->model->pre . "goods AS g ".
+         $where;
         $res = $this->model->query($sql);
         $arr = array();
         foreach ($res as $row) {
             // 销量统计
-            $sales_volume = (int) $row['sales_volume'];
+           /* $sales_volume = (int) $row['sales_volume'];
             if (mt_rand(0, 3) == 3){
                 $sales_volume = model('GoodsBase')->get_sales_count($row['goods_id']);
                 $sql = 'REPLACE INTO ' . $this->model->pre . 'touch_goods(`goods_id`, `sales_volume`) VALUES('. $row['goods_id'] .', '.$sales_volume.')';
                 $this->model->query($sql);
             }
-            if ($row['promote_price'] > 0) {
-                $promote_price = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
-            } else {
-                $promote_price = 0;
-            }
-            /* 处理商品水印图片 */
-            $watermark_img = '';
-
-            if ($promote_price != 0) {
-                $watermark_img = "watermark_promote_small";
-            } elseif ($row['is_new'] != 0) {
-                $watermark_img = "watermark_new_small";
-            } elseif ($row['is_best'] != 0) {
-                $watermark_img = "watermark_best_small";
-            } elseif ($row['is_hot'] != 0) {
-                $watermark_img = 'watermark_hot_small';
-            }
-
-            if ($watermark_img != '') {
-                $arr[$row['goods_id']]['watermark_img'] = $watermark_img;
-            }
-
+            */
+        	$sales_volume = model('GoodsBase')->get_sales_count($row['goods_id']);
+        	
             $arr[$row['goods_id']]['goods_id'] = $row['goods_id'];
             if ($display == 'grid') {
                 $arr[$row['goods_id']]['goods_name'] = C('goods_name_length') > 0 ? sub_str($row['goods_name'], C('goods_name_length')) : $row['goods_name'];
@@ -572,35 +590,80 @@ class CategoryController extends CommonController {
             }
             $arr[$row['goods_id']]['name'] = $row['goods_name'];
             $arr[$row['goods_id']]['goods_brief'] = $row['goods_brief'];
-            $arr[$row['goods_id']]['goods_style_name'] = add_style($row['goods_name'], $row['goods_name_style']);
-            $arr[$row['goods_id']]['market_price'] = price_format($row['market_price']);
-            $arr[$row['goods_id']]['shop_price'] = price_format($row['shop_price']);
-            $arr[$row['goods_id']]['type'] = $row['goods_type'];
-            $arr[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
-            $arr[$row['goods_id']]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
-            $arr[$row['goods_id']]['goods_img'] = get_image_path($row['goods_id'], $row['goods_img']);
-            $arr[$row['goods_id']]['url'] = url('goods/index', array(
-                'id' => $row['goods_id']
-            ));
+            $arr[$row['goods_id']]['goods_price'] = $row['goods_price'];
+             $arr[$row['goods_id']]['is_on_sale'] = $row['is_on_sale'] ;
             $arr[$row['goods_id']]['sales_count'] = $sales_volume;
-            $arr[$row['goods_id']]['sc'] = model('GoodsBase')->get_goods_collect($row['goods_id']);
-            $arr[$row['goods_id']]['mysc'] = 0;
-            // 检查是否已经存在于用户的收藏夹
-            if ($_SESSION['user_id']) {
-                unset($where);
-                // 用户自己有没有收藏过
-                $where['goods_id'] = $row['goods_id'];
-                $where['user_id'] = $_SESSION['user_id'];
-                $rs = $this->model->table('collect_goods')
-                        ->where($where)
-                        ->count();
-                $arr[$row['goods_id']]['mysc'] = $rs;
-            }
+           /*
             $arr[$row['goods_id']]['promotion'] = model('GoodsBase')->get_promotion_show($row['goods_id']);
             $arr[$row['goods_id']]['comment_count'] = model('Comment')->get_goods_comment($row['goods_id'], 0);  //商品总评论数量 
-            $arr[$row['goods_id']]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评数量  
+            $arr[$row['goods_id']]['favorable_count'] = model('Comment')->favorable_comment($row['goods_id'], 0);  //获得商品好评数量
+           */  
         }
         return $arr;
     }
 
+    /*
+     * 编辑产品
+     */
+    public function edit_goods()
+    {
+    	// 初始化返回数组
+        $result = array(
+            'error' => 0,
+            'message' => '',
+            'content' => '',
+            'goods_id' => ''
+        );
+    	
+
+        if (empty($_POST ['goods_id'])) {
+            $result ['error'] = 1;
+            die(json_encode($result));
+        }
+        
+        $json = new EcsJson;
+        $goods = array(
+		        'goods_id'=>$_POST ['goods_id'],
+		        'goods_name'=>$_POST ['goods_name'],
+		        'goods_price'=>$_POST ['goods_price'],
+		        'goods_brief'=>$_POST ['goods_brief'],
+		        'goods_status'=>$_POST ['goods_status']
+        );
+        
+        //检查商品是否合法
+       $sql= 'SELECT  g.goods_name,  g.shop_price AS goods_price, g.goods_brief, g.is_on_sale FROM ' . $this->model->pre . "goods AS g ". 
+        " WHERE g.goods_id = $goods[goods_id] and g.user_id = $_SESSION[user_id] ";
+       $res = $this->model->query($sql);
+       
+       if(empty($res))
+       {
+       		$result ['error'] = 1;
+       		$result ['message'] = '该商品不存在';
+            die(json_encode($result));
+       }
+       else
+       {
+       	  $sql = 'update ' . $this->model->pre . "goods set ".
+       	         " goods_name = '$goods[goods_name]' ,".
+       	  " shop_price = $goods[goods_price] ,".
+       	  " goods_brief = '$goods[goods_brief]' ,".
+       	  " is_on_sale = $goods[goods_status] ".
+       	  " where goods_id = $goods[goods_id] and user_id = $_SESSION[user_id];";
+       	  
+       	  $this->model->query($sql);
+       	  
+       	  	$result ['error'] = 0;
+       		$result ['message'] = '产品更新成功';
+       		$result ['content'] = $json->encode($goods);
+       		$result ['goods_id']=$goods[goods_id];
+            die(json_encode($result));
+       }
+    }
+
+    public function  del_goods()
+    {
+
+    	$goods_id =I('request.goods_id');
+     
+    }
 }
