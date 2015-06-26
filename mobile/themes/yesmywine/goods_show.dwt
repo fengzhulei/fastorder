@@ -21,12 +21,10 @@
 	 <td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>
 	</tr>
  </table>
-	
-	 
  <!--{elseif $act eq 'goods_show'}-->  
-  <!-- #BeginLibraryItem "/library/consignee.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/fastorder_consignee.lbi" --><!-- #EndLibraryItem -->
  <!--{/if}-->
- 
+ <div id="tipsmsg" style="margin-right: 5px; text-align:center;margin-top:2em"  class="co"></div>
  <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
  
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 

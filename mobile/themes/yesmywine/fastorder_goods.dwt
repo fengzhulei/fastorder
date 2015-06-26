@@ -1,12 +1,6 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="con">
-  <div style="height:4.2em;"></div>
-   <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
-  <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
-  <span>{$title}</span> 
-  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
-  </header>
-  
+ 
   <nav class="ect-nav ect-nav-list" style="display:none;"> 
    <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
   </nav>

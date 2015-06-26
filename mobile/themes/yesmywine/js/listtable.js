@@ -67,6 +67,14 @@ listTable.url += "?is_ajax=1";
  */
 listTable.addProduct = function(obj, act, id)
 {
+	//检查产品名称是否填写
+	var txt_name = getLastDOM("goods_name");
+	if(txt_name.value == '')
+	{
+		txt_name.focus();
+		showMsg("tipsmsg",'请输入产品名称');
+		return;
+	}
 	//检查价格是否正确
 	var txt = getLastDOM("goods_price");
 	
@@ -463,11 +471,11 @@ listTable.generateLink = function(formId,type)
 {
 	var form = document.getElementById(formId);
 	var goodsIds = this.getSelectedId(form);
-	var data = JSON.stringify(goodsIds);
+	//var data = JSON.stringify(goodsIds);
 	$.ajax({
         type: "post",
         url: "index.php?m=default&c=Category&a=generate_link",     
-        data: 'goods_ids='+data,   
+        data: 'goods_ids='+goodsIds,   
         datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
         success: function(data) {
         	alert(data); 
@@ -476,6 +484,59 @@ listTable.generateLink = function(formId,type)
             alert(data);
         }
     });
+}
+
+listTable.checkOutOrder = function(formId,type)
+{		
+	var form = document.getElementById(formId);
+	var goodsIds = this.getSelectedId(form,true);
+	var user_id =document.getElementById("user_id").value;
+	
+	if(goodsIds == '')
+	{
+		showMsg("tipsmsg",'请选择您要购买的产品');
+		return;
+	}
+	
+	var name = $("#consignee").val();
+	var mobile = $("#mobile").val();
+	var address = $("#address").val();
+	if(name =='' )
+	{
+		showMsg("tipsmsg",'请输入收货人姓名！');
+		$("#consignee").focus();
+		return;
+	}
+	if(mobile =='' || !Utils.isTel(mobile))
+	{
+		showMsg("tipsmsg",'请输入正确的联系方式！');
+		$("#mobile").focus();
+		return;
+	}
+	if(address == '')
+	{
+		showMsg("tipsmsg",'请输入完整的收货地址！');
+		$("#address").focus();
+		return;
+	}
+	var host = "index.php?m=default&c=Flow&a=checkoutorder";
+	var queryString = '&goods_ids='+goodsIds+"&user_id="+user_id+"&"+$("#orderForm").serialize();
+	
+	var url = host+queryString;
+	window.location.href =url;
+	/*$.ajax({
+        type: "post",
+        url: "index.php?m=default&c=Flow&a=checkoutorder",     
+        data: 'goods_ids='+goodsIds+"&user_id="+user_id+"&"+$("#orderForm").serialize(),   
+        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+        success: function(data) {
+        	alert(data); 
+        },
+        error: function(data) {
+            alert(data);
+        }
+    });
+    */
 }
 
 /**
@@ -658,6 +719,8 @@ listTable.selectAll = function(obj, chk)
 
 listTable.getSelectedId = function(obj)
 {
+	var hasNumber= arguments[1]?arguments[1]:false;
+	
 	var chk = 'checkboxes';
 	var goodsIds = '';　//创建一个数组
 	var elems = obj;
@@ -668,7 +731,17 @@ listTable.getSelectedId = function(obj)
 	    {
 	      if(elems[i].checked == true)
     	  {
-	    	  goodsIds +=elems[i].value+',';
+	    	  if(hasNumber)
+    		  {
+	    		  var goodsId =elems[i].value;
+	    		  var goodsNumber = $("#goods_number_"+goodsId).val();
+	    		  goodsIds +=goodsId+'^'+goodsNumber+',';
+    		  }
+	    	  else
+    		  {
+	    		  goodsIds +=elems[i].value+',';
+    		  }
+	    	  
     	  }
 	    }
 	  }

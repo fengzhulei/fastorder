@@ -769,8 +769,8 @@ class CategoryController extends CommonController {
     public function generate_link()
     {    	
     	$goods_str =rtrim($_POST['goods_ids'],',');
-    	$goods_str = trim($goods_str,'\"');
-    	$goods_str = rtrim($goods_str,',');
+    	//$goods_str = trim($goods_str,'\"');
+    	//$goods_str = rtrim($goods_str,',');
     	$goods_ids =explode(',', $goods_str) ;
     	$user_id = $_SESSION['user_id'];
     	
@@ -794,6 +794,7 @@ class CategoryController extends CommonController {
     	$goods_list = model('Goods')->get_user_goods_list_byId($data['goods_ids'],$data['user_id']);
     	
     	$this->assign('goods_list',$goods_list);
+    	$this->assign('user_id',$data['user_id']);
     	$this->assign('act','goods_show');
     	$this->assign('title','购买产品');
     	$this->display('goods_show.dwt');

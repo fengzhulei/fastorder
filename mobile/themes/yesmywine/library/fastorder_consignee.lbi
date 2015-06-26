@@ -1,0 +1,24 @@
+<form action="" method="post" id="orderForm" name="orderForm">
+<div class="ect-bg-colorf flow-consignee">
+  <ul>
+    <li>
+      <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b><span>
+        <input name="consignee" type="text" class="inputBg" id="consignee" style="border:2px solid" value="{$consignee.consignee|escape}">
+        </span></div>
+    </li>
+    <li>
+      <div class="input-text"><b class="pull-left">{$lang.mobile}：</b><span>
+        <input name="mobile" type="text" class="inputBg"  id="mobile" style="border:2px solid" value="{$consignee.mobile|escape}">
+        </span></div>
+    </li>
+    
+    <li class="input-text"><b class="pull-left">{$lang.detailed_address}：</b>
+      <textarea name="address"  id="address" style="border:2px solid">{$consignee.address|escape}</textarea>
+    </li>
+  </ul>
+</div>
+</form>
+<div  class="btnbox"> 
+  <button onclick='listTable.checkOutOrder("listForm","checkout")' class="btn btn-info ect-btn-info ect-colorf" name="Submit">{$lang.shipping_address}</button>
+</div>
+

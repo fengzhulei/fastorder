@@ -373,6 +373,7 @@ class FlowController extends CommonController {
         ecs_header("Location: " . url('flow/index') . "\n");
     }
 
+ 
     /**
      * 订单确认
      */
@@ -2109,5 +2110,61 @@ class FlowController extends CommonController {
             show_message(L('not_fount_consignee'));
         }
     }
+    
+    /**
+     * 极速订单，订单确认
+     * Enter description here ...
+     */
+ 	public function  checkoutorder()
+ 	{
+  		$goods_info_str =rtrim($_GET['goods_ids'],',');    	
+    	$goods_info =explode(',', $goods_info_str) ;
+    	
+    	$goods_ids = array();
+    	$goods_id_number = array();
+    	foreach ($goods_info as $goods)
+    	{
+    		$temp_id_number = explode('^', $goods);
+    		$goods_id=$temp_id_number[0];
+    		$goods_number=$temp_id_number[1];
+    		
+    		array_push($goods_ids, $goods_id);
+    		$goods_id_number[$goods_id]=$goods_number;
+    	}
+    	$user_id = $_GET['user_id'];
+    	$goods_list = model('Goods')->get_user_goods_list_byId($goods_ids,$user_id);
+    	
+    	$consignee = $_GET['consignee'];
+    	$mobile = $_GET['mobile'];
+    	$address = $_GET['address'];
+    	
+    	if(!empty($goods_list) && !empty($consignee)&&!empty($mobile)&&!empty($address))
+    	{
+    		$total = 0;
+    		foreach ($goods_list as &$goods)
+    		{
+    			$goods['goods_number']=$goods_id_number[$goods['goods_id']];
+    			$goods['subtotal'] = $goods['goods_price']*$goods['goods_number'];
+    			$total +=$goods['subtotal'];
+    		}
+    		
+    		unset($goods);
+    		$consignee_info = array(
+	    		'consignee'=>$consignee,
+	    		'mobile'=>$mobile,
+	    		'address'=>$address
+    		);
+    		$this->assign("goods_list",$goods_list);
+    		$this->assign("consignee",$consignee_info);
+    		$this->assign("total",$total);
+    		$this->assign("step",ACTION_NAME);
+    		$this->display("flow.dwt");
+    	}
+    	else
+    	{
+    		$message ="信息不全";
+    		show_message($message);
+    	}
+  	}
 
 }

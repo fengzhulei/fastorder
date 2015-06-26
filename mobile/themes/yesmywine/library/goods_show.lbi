@@ -30,6 +30,7 @@
 	  </table>
 	  <!--{else}-->
 	    <!--{if $act eq 'goods_show'}-->
+	      <input type="hidden" id ="user_id" name="user_id" value="{$user_id}" />
 	    	<table cellpadding="3" cellspacing="1">
 			  <tr>
 			    <th style="width: 10%;">
@@ -52,7 +53,7 @@
 				    <span >{$goods.goods_price}</span>
 				    </td>
 				    <td>
-				    <input type="text" name="goods_number" value="1"></input>
+				    <input type="text" name="goods_number_{$goods.goods_id}" id="goods_number_{$goods.goods_id}" value="1"></input>
 				    </td>
 			    </tr>
 			    
