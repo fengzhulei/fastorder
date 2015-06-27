@@ -478,7 +478,9 @@ listTable.generateLink = function(formId,type)
         data: 'goods_ids='+goodsIds,   
         datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
         success: function(data) {
-        	alert(data); 
+        	var strMsg = "链接已经生成，请点击确定按钮进行预览，在预览界面点击右上角进行分享。";
+        	alert(strMsg); 
+        	window.location.href =data;
         },
         error: function(data) {
             alert(data);
@@ -537,6 +539,28 @@ listTable.checkOutOrder = function(formId,type)
         }
     });
     */
+}
+
+/**
+ * 切换订单的发货状态
+ */
+listTable.changeOrderShipStatus = function(obj,orderId,status)
+{
+	var order_obj = obj.parent().parent();
+	
+	$.post({
+			type: "post",
+	        url: "index.php?m=default&c=user&a=change_order_shipstatus",     
+	        data: 'orderId='+orderId+"&shipStatus="+status,   
+	        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+	        success: function(data) {
+	        	//alert(data);
+	        	order_obj.html(data);
+	        },
+	        error: function(data) {
+	            alert(data);
+	        }
+		});
 }
 
 /**

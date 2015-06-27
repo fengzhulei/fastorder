@@ -265,11 +265,19 @@ class UserController extends CommonController {
         $this->display('user_order_list.dwt');
     }
 
+  	/**
+     * 获取已付款订单
+     */
+    public function pay_order_list() {
+        $this->assign('pay', 1);
+        $this->assign('title', L('not_pay_list'));
+        $this->display('user_order_list.dwt');
+    }
     /**
      * 获取全部订单
      */
     public function order_list() {
-        $pay = 1;
+        $pay = 2;
         $count = $this->model->table('order_info')->where('user_id = ' . $this->user_id)->count();
         $filter['page'] = '{page}';
         $offset = $this->pageLimit(url('order_list', $filter), 5);
@@ -282,6 +290,23 @@ class UserController extends CommonController {
         $this->display('user_order_list.dwt');
     }
 
+/**
+     * 获取未发货订单
+     */
+    public function not_ship_order_list() {
+        $this->assign('pay', 0);
+        $this->assign('title', L('ss.'.SS_UNSHIPPED));
+        $this->display('user_order_list.dwt');
+    }
+
+  	/**
+     * 获取已发货订单
+     */
+    public function ship_order_list() {
+        $this->assign('pay', 1);
+        $this->assign('title', L('ss.'.SS_SHIPPED));
+        $this->display('user_order_list.dwt');
+    }
     /**
      * ajax获取订单
      */
@@ -304,6 +329,43 @@ class UserController extends CommonController {
         }
     }
 
+    /**
+     * ajax修改订单的发货状态 
+     * Enter description here ...
+     */
+    public function change_order_shipstatus()
+    {
+    	$ship_status = $_POST['shipStatus'];
+    	$order_id = $_POST['orderId'];
+    	
+    	if($ship_status == 1)
+    	{
+    		$ship_status = SS_SHIPPED;
+    	}
+    	else
+    	{
+    		$ship_status = SS_UNSHIPPED;
+    	}
+    	
+    	
+    	//$order['order_id'] = $order_id;
+    	$order['shipping_status'] = $ship_status;
+    	if($ship_status == SS_SHIPPED)
+    	{
+    		$order['shipping_time'] = gmtime();
+    	}
+    	else {
+    		$order['shipping_time'] =0;
+    	}
+        $order = addslashes_deep($order);
+        model('Users')->update_order($order_id, $order);
+        
+        $order_changed = model('Users')->get_user_order_by_orderid($_SESSION['user_id'],$order_id);
+
+        $this->assign('orders', $order);
+        $html = ECTouch::view()->fetch('library/asynclist_info.lbi');
+        die(json_encode($html));
+    }
     /**
      * 订单跟踪
      */
@@ -368,14 +430,16 @@ class UserController extends CommonController {
 
         // 订单商品
         $goods_list = model('Order')->order_goods($order_id);
-        foreach ($goods_list as $key => $value) {
-            $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
-            $goods_list[$key]['goods_price'] = price_format($value['goods_price'], false);
-            $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
-            $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($value['goods_id']);
-            $goods_list[$key]['goods_thumb'] = get_image_path($order_id, $value['goods_thumb']);
+        if(is_array($goods_list))
+        {
+	        foreach ($goods_list as $key => $value) {
+	            $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
+	            $goods_list[$key]['goods_price'] = price_format($value['goods_price'], false);
+	            $goods_list[$key]['subtotal'] = price_format($value['subtotal'], false);
+	            $goods_list[$key]['tags'] = model('ClipsBase')->get_tags($value['goods_id']);
+	            $goods_list[$key]['goods_thumb'] = get_image_path($order_id, $value['goods_thumb']);
+	        }
         }
-
         // 设置能否修改使用余额数
         if ($order['order_amount'] > 0) {
             if ($order['order_status'] == OS_UNCONFIRMED || $order['order_status'] == OS_CONFIRMED) {

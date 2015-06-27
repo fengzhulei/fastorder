@@ -18,11 +18,10 @@
   <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
   <nav class="ect-nav ect-nav-list" style="display:none;">
     <ul class="ect-diaplay-box text-center">
-      <li class="ect-box-flex"><a href="{:url('index/index')}"><i class="ect-icon ect-icon-home"></i>{$lang.home}</a></li>
-      <li class="ect-box-flex"><a href="{:url('category/all')}"><i class="ect-icon ect-icon-cate"></i>{$lang.category}</a></li>
-      <li class="ect-box-flex"><a href="javascript:openSearch();"><i class="ect-icon ect-icon-search"></i>{$lang.search}</a></li>
-      <li class="ect-box-flex"><a href="{:url('flow/cart')}"><i class="ect-icon ect-icon-flow"></i>{$lang.shopping_cart}</a></li>
-      <li class="ect-box-flex"><a href="{:url('user/index')}"><i class="ect-icon ect-icon-user"></i>{$lang.user_center}</a></li>
-    </ul>
+      <li class="ect-box-flex"><a href="{:url('category/add_goods')}"><i class="ect-icon ect-icon-home"></i>{$lang.goods_add}</a></li>
+	  <li class="ect-box-flex"><a href="{:url('category/index')}"><i class="ect-icon ect-icon-cate"></i>{$lang.goods_edit}</a></li>
+	  <li class="ect-box-flex"><a href="{:url('category/goods_select')}"><i class="ect-icon ect-icon-search"></i>{$lang.goods_send}</a></li>
+	  <li class="ect-box-flex"><a href="{:url('user/order_list')}"><i class="fa fa-file-text"></i>{$lang.goods_order}</a></li>
+	</ul>
   </nav>
 </div>

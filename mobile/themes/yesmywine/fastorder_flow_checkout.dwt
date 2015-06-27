@@ -1,0 +1,59 @@
+<div class="con">
+  <div class="ect-bg">
+    <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
+    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
+  </div>
+  <div class="flow-checkout top_menu_m50">
+    <form action="{:url('flow/doneorder')}" method="post" name="theForm" id="theForm" onSubmit="return checkOrderForm(this)">
+      
+     <div class="ect-bg-colorf flow-consignee">
+       <ul>
+	    <li>
+	      <div class="input-text"><b class="pull-left">{$lang.consignee_name}：</b>
+	       <span> {$consignee.consignee|escape} </span>
+	      </div>
+	    </li>
+	    <li>
+	      <div class="input-text"><b class="pull-left">{$lang.mobile}：</b>
+	       <span>{$consignee.mobile}</span>
+	       </div>
+	    </li>
+	    
+	    <li class="input-text"><b class="pull-left">{$lang.detailed_address}：</b>
+	     {$consignee.address}
+	    </li>
+	  </ul>
+         
+    </div>
+      
+      
+      <section class="ect-margin-tb ect-margin-bottom0 ect-padding-lr checkout-select checkout-pro-list">
+        <p><b>{$lang.goods_list}</b><span class="label ect-bg-colory"><!--{if $allow_edit_cart} --><a href="{:url('flow/index')}" class="ect-colorf">{$lang.modify}</a><!--{/if} --></span></p>
+        <ul>
+          <!-- {foreach from=$goods_list item=goods} -->
+          <li>
+            <dl>
+              <dt class="pull-left"> 
+               {$goods.goods_name}
+               </dt>
+              <dd class="pull-left list-num">x {$goods.goods_number}</dd>
+              <dd class="pull-right">{$goods.subtotal}</dd>
+            </dl>
+          </li>
+          <!-- {/foreach} -->
+        </ul>
+    <div class="ect-padding-tb text-right" id="ECS_ORDERTOTAL">
+  
+	  {$lang.goods_all_price}:
+	  <b class="ect-colory">{$total}</b>
+	  <br />  
+  
+	</div>
+      <div  class="btnbox">
+      <input type="button" class="btn_0 ect-colorf"  onclick="javascript:history.go(-1)" value="返回修改"/ > 
+       <input type="submit" name="submit" value="{$lang.order_submit}" class="btn_0 ect-colorf"/>
+        <input type="hidden" name="step" value="done" />
+      </div>
+    </form>
+  </div>
+</div>

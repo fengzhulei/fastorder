@@ -100,6 +100,12 @@ $_LANG['old_price'] = '原  价：';
 $_LANG['package_price'] = '礼包价：';
 $_LANG['then_old_price'] = '节  省：';
 $_LANG['free_goods'] = '免运费商品';
+$_LANG['order_submit_ok']='订单提交成功，请联系您的商家进行付款';
+
+$_LANG['goods_add']='产品添加 ';
+$_LANG['goods_edit']='产品编辑 ';
+$_LANG['goods_send']='发送链接  ';
+$_LANG['goods_order']='订单处理';
 
 $_LANG['searchkeywords_notice'] = '匹配多个关键字全部，可用 "空格" 或 "AND" 连接。如 win32 AND unix<br />匹配多个关键字其中部分，可用"+"或 "OR" 连接。如 win32 OR unix';
 $_LANG['hidden_outstock'] = '隐藏已脱销的商品';

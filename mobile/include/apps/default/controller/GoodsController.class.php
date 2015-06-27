@@ -209,4 +209,5 @@ class GoodsController extends CommonController {
         die(json_encode($res));
     }
 
+ 
 }

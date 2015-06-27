@@ -121,17 +121,29 @@
 <!-- 文章列表end--> 
 
 <!-- 用户订单 start--> 
-<!--{if $orders}--><a href="{:url('user/order_detail', array('order_id'=>$this->_var['orders']['order_id']))}"><img src="{$orders.img}" class="pull-left" />
+<!--{if $orders}--><a href="#">
           <dl>
             <dt>
               <h4 class="title">{$lang.order_number}：{$orders.order_sn}</h4>
             </dt>
            <dd>{$lang.order_status}：{$orders.order_status}</dd>
+            <!--{if $orders.shipping_status eq 1}-->
+           <dd>{$lang.order_shiptime}：{$orders.shipping_time}</dd>
+           <!--{/if}-->
+           <dd>{$lang.consignee_name}:{$orders.consignee}</dd>
+           <dd>{$lang.mobile}:{$orders.mobile}</dd>
+           <dd>{$lang.detailed_address}:{$orders.address}</dd>
+           <dd>{$lang.order_total_quantity}：<span class="ect-color">{$orders.goods_qty_total}</span></dd>
            <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.total_fee}</span></dd>
            <dd>{$lang.order_addtime}：{$orders.order_time}</dd>
           </dl>
-           <i class="pull-right fa fa-angle-right"></i> 
-            </a>  
+          </a>  
+          <dl margin-left="8em" style="margin-top: 3em;  display: inline-block;">
+             <!--{if $orders.shipping_status eq 0}-->
+			  <dd><button onclick='listTable.changeOrderShipStatus(this,{$orders.order_id},'1')'>发货</button></dd>
+			  <!--{/if}-->
+			 <dd> <button onclick='window.location.href="{:url('user/order_detail', array('order_id'=>$this->_var['orders']['order_id']))}"' style="margin-left:0.3em">查看详情</button></dd>
+		  </dl>
 
 <!-- {/if}--> 
 <!-- 用户订单end--> 

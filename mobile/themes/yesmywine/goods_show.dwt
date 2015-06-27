@@ -1,4 +1,4 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 <div class="con goods_warp">
   <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
   <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
@@ -17,8 +17,8 @@
  <!--{if $act eq 'goods_select'}-->
  <table>
  	<tr>
-	 <td><button onclick='listTable.generateLink("listForm","send")'>发送给朋友</button></td>
-	 <td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>
+	 <td><button onclick='listTable.generateLink("listForm","send")'>生成链接</button></td>
+	 <!--<td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>-->
 	</tr>
  </table>
  <!--{elseif $act eq 'goods_show'}-->  

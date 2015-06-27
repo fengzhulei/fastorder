@@ -267,6 +267,7 @@ $_LANG['cancel'] = '取消订单';
 $_LANG['pay_money'] = '付款';
 $_LANG['view_order'] = '查看订单';
 $_LANG['order_tracking'] = '订单跟踪';
+$_LANG['order_shiptime'] = '发货时间';
 $_LANG['received'] = '确认收货';
 $_LANG['ss_received'] = '已完成';
 $_LANG['confirm_cancel'] = '您确认要取消该订单吗？取消后此订单将视为无效订单';
@@ -285,6 +286,8 @@ $_LANG['business_message'] = '发送/查看商家留言';
 $_LANG['pay_order_by_surplus'] = '追加使用余额支付订单：%s';
 $_LANG['return_surplus_on_cancel'] = '取消订单 %s，退回支付订单时使用的预付款';
 $_LANG['return_integral_on_cancel'] = '取消订单 %s，退回支付订单时使用的积分';
+$_LANG['order_total_quantity'] = '商品总数';
+
 
 /* 订单状态 */
 $_LANG['os'][OS_UNCONFIRMED] = '未确认';

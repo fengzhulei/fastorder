@@ -110,11 +110,36 @@ class CommonController extends BaseController
                     model('Users')->update_user_info();
                 }
             } else {
-                $_SESSION['user_id'] = 0;
-                $_SESSION['user_name'] = '';
-                $_SESSION['email'] = '';
-                $_SESSION['user_rank'] = 0;
-                $_SESSION['discount'] = 1.00;
+            	$message_id = $_GET['message_id'];
+            	if(!empty($message_id))
+            	{
+	            	$where['message_id'] = $message_id;
+		            $row = $this->model->table('users')
+		                ->field('user_id, user_name, message_id')
+		                ->where($where)
+		                ->find();
+		            if ($row) {
+		            	 $_SESSION['user_id'] = $row['user_id'];
+		                $_SESSION['user_name'] = $row['user_name'];
+		                model('Users')->update_user_info();
+		            }
+		            else 
+		            {
+		            	//生成一条会员信息
+		            	$user_id = model('Users')->add_user_info($message_id);
+		            	$_SESSION['user_id'] = $user_id;
+	                	$_SESSION['user_name'] = '';
+	                	model('Users')->update_user_info();
+		            }
+            	}
+            	else 
+            	{
+	                $_SESSION['user_id'] = 0;
+	                $_SESSION['user_name'] = '';
+	                $_SESSION['email'] = '';
+	                $_SESSION['user_rank'] = 0;
+	                $_SESSION['discount'] = 1.00;
+            	}
             }
         }
         
@@ -129,12 +154,12 @@ class CommonController extends BaseController
         }
         
         // session不存在，检查cookie
-        if (! empty($_COOKIE['ECS']['user_id']) && ! empty($_COOKIE['ECS']['password'])) {
+        if (! empty($_COOKIE['ECS']['user_id']) && ! empty($_COOKIE['ECS']['message_id'])) {
             // 找到cookie,验证信息
             $where['user_id'] = $_COOKIE['ECS']['user_id'];
-            $where['password'] = $_COOKIE['ECS']['password'];
+            $where['message_id'] = $_COOKIE['ECS']['message_id'];
             $row = $this->model->table('users')
-                ->field('user_id, user_name, password')
+                ->field('user_id, user_name, message_id')
                 ->where($where)
                 ->find();
             if ($row) {
@@ -145,7 +170,7 @@ class CommonController extends BaseController
                 // 没有找到这个记录
                 $time = time() - 3600;
                 setcookie("ECS[user_id]", '', $time, '/');
-                setcookie("ECS[password]", '', $time, '/');
+                setcookie("ECS[message_id]", '', $time, '/');
             }
         }
         

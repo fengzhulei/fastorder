@@ -11,12 +11,16 @@
 <!-- #BeginLibraryItem "/flow_checkout.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
 
-<!-- {if $step eq "checkoutorder"} 开始订单确认界面 -->
-<!-- #BeginLibraryItem "/fastorder_flow_done.dwt" --><!-- #EndLibraryItem -->
+<!-- {if $step eq "checkoutorder"} 极速订单确认界面 -->
+<!-- #BeginLibraryItem "/fastorder_flow_checkout.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
 
 <!-- {if $step eq "done"} 订单提交成功 -->
 <!-- #BeginLibraryItem "/flow_done.dwt" --><!-- #EndLibraryItem -->
+<!-- {/if} -->
+
+<!-- {if $step eq "doneorder"} 订单提交成功 -->
+<!-- #BeginLibraryItem "/fastorder_flow_done.dwt" --><!-- #EndLibraryItem -->
 <!-- {/if} -->
 
 <!-- {if $step eq "consignee"} 开始收货人信息填写界面 -->

@@ -2152,8 +2152,13 @@ class FlowController extends CommonController {
     		$consignee_info = array(
 	    		'consignee'=>$consignee,
 	    		'mobile'=>$mobile,
-	    		'address'=>$address
+	    		'address'=>$address,
+    			'user_id'=>$user_id
     		);
+    		
+    		$_SESSION['consignee_info'] =$consignee_info;
+    		$_SESSION['goods_list'] =$goods_list;
+    		
     		$this->assign("goods_list",$goods_list);
     		$this->assign("consignee",$consignee_info);
     		$this->assign("total",$total);
@@ -2165,6 +2170,150 @@ class FlowController extends CommonController {
     		$message ="信息不全";
     		show_message($message);
     	}
+  	}
+  	
+  	/**
+  	 * 极速订单，下单
+  	 * Enter description here ...
+  	 */
+  	public function  doneorder()
+  	{
+  		if(!empty($_SESSION['consignee_info'])&&!empty($_SESSION['goods_list']))
+  		{
+  			$goods_list = $_SESSION['goods_list'];
+  			$consignee_info = $_SESSION['consignee_info'];
+  			
+  			if(empty($consignee_info))
+  			{
+  				$msg ="收货人信息不能为空";
+  				show_message($msg);
+  			}
+  			
+  			if(empty($goods_list))
+  			{
+  				$msg ="您未选择任何产品";
+  				show_message($msg);
+  			}
+  			$totalAmount =0;
+  			$totalQuantity =0;
+  			foreach($goods_list as $goods)
+  			{
+  			//model('Order')->addto_cart($goods->goods_id, $goods->number, $goods->spec, $goods->parent);
+  				$totalAmount +=$goods['subtotal'];
+  				$totalQuantity +=$goods['goods_number'];
+  			}
+	  		// 订单信息
+	        $order = array(
+	            'shipping_id' => '',
+	            'pay_id' => '', // 付款方式
+	            'pack_id' => '',
+	            'card_id' => 0,
+	            'card_message' => '',
+	            'surplus' =>  0.00,
+	            'integral' =>  0,
+	            'bonus_id' => 0,
+	            'need_inv' =>  0 ,
+	            'inv_type' => '',
+	            'inv_payee' =>'',
+	            'inv_content' => '',
+	            'postscript' => '',
+	            'how_oos' =>  '',
+	            'need_insure' =>  0,
+	            'user_id' => $consignee_info['user_id'],
+	            'add_time' => gmtime(),
+	            'order_status' => OS_UNCONFIRMED,
+	            'shipping_status' => SS_UNSHIPPED,
+	            'pay_status' => PS_UNPAYED,
+	            'agency_id' => '',
+	            'mobile_order' => 1,
+	            'mobile_pay' => 1
+	        );
+	
+	        //收货人
+	        $order['consignee']=$consignee_info['consignee'];
+	        $order['address']=$consignee_info['address'];
+	        $order['mobile']=$consignee_info['mobile'];
+	        
+	        /* 扩展信息 */
+	         $order ['extension_code'] = '';
+	         $order ['extension_id'] = 0;
+	         /* 订单中的总额 */
+	        $order['goods_qty_total']=$totalQuantity;
+	        $order ['bonus'] = 0;
+	        $order ['goods_amount'] = $totalAmount;
+	        $order ['discount'] = 0;
+	        $order ['surplus'] = 0;
+	        $order ['order_amount '] =$totalAmount;
+		        
+	          /* 插入订单表 */
+	        $error_no = 0;
+	        do {
+	            $order ['order_sn'] = get_order_sn(); // 获取新订单号
+	            $new_order = model('Common')->filter_field('order_info', $order);
+	            $this->model->table('order_info')->data($new_order)->insert();
+	            $error_no = M()->errno();
+	
+	            if ($error_no > 0 && $error_no != 1062) {
+	                die(M()->errorMsg());
+	            }
+	        } while ($error_no == 1062); // 如果是订单号重复则重新提交数据
+	        
+	        $new_order_id = mysql_insert_id();
+	        $order ['order_id'] = $new_order_id;
+	
+	        /* 插入订单商品 */
+	        foreach($goods_list as $goods)
+	        {
+	        	$sql = "INSERT INTO " . $this->model->pre . 
+	        	"order_goods( " . "order_id, goods_id, goods_name,  goods_number, " . "goods_price  ) " .
+	        	         "values( $new_order_id, $goods[goods_id],  '$goods[goods_name]',   $goods[goods_number],  " . " $goods[goods_price] );" ;
+	       		$this->model->query($sql);
+	        }
+	        
+	        
+  		  /* 给商家发邮件 */
+	        /* 增加是否给客服发送邮件选项 */
+	        if (C('send_service_email') && C('service_email') != '') {
+	            $tpl = model('Base')->get_mail_template('remind_of_new_order');
+	            $this->assign('order', $order);
+	            $this->assign('goods_list', $cart_goods);
+	            $this->assign('shop_name', C('shop_name'));
+	            $this->assign('send_date', date(C('time_format')));
+	            $content = ECTouch::$view->fetch('str:' . $tpl ['template_content']);
+	            send_mail(C('shop_name'), C('service_email'), $tpl ['template_subject'], $content, $tpl ['is_html']);
+	        }
+	
+	        /* 如果需要，发短信 */
+	        if (C('sms_order_placed') == '1' && C('sms_shop_mobile') != '') {
+	            $sms = new EcsSms();
+	            $msg = $order ['pay_status'] == PS_UNPAYED ? L('order_placed_sms') : L('order_placed_sms') . '[' . L('sms_paid') . ']';
+	            $sms->send(C('sms_shop_mobile'), sprintf($msg, $order ['consignee'], $order ['mobile']), '', 13, 1);
+	        }
+	        /* 如果需要，微信通知 by wanglu */
+	        if (method_exists('WechatController', 'do_oauth')) {
+	            $order_url = __HOST__ . url('user/order_detail', array('order_id' => $order ['order_id']));
+	            $order_url = urlencode(base64_encode($order_url));
+	            send_wechat_message('order_remind', '', $order['order_sn'] . L('order_effective'), $order_url, $order['order_sn']);
+	        }
+	        
+	        $total=price_format($totalAmount);
+	        /* 订单信息 */
+	        $this->assign('order', $order);
+	        $this->assign('total', $total);
+	        $this->assign('goods_list', $goods_list);
+	        $this->assign('order_submit_ok', L('order_submit_ok')); // 返回提示
+	
+	       // user_uc_call('add_feed', array($order ['order_id'], BUY_GOODS)); // 推送feed到uc
+	        unset($_SESSION ['consignee_info']); // 清除session中保存的收货人信息
+	        unset($_SESSION ['goods_list']);
+	       	
+	       
+	        $this->assign('step', ACTION_NAME);
+	
+	        $this->assign('title', L('order_submit'));
+	
+	        $this->display('flow.dwt');
+  		}
   	}
 
 }

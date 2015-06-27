@@ -554,7 +554,7 @@ class integrate
             /* 摧毁cookie */
             $time = time() - 3600;
             setcookie("ECS[user_id]", '', $time, $this->cookie_path);
-            setcookie("ECS[password]", '', $time, $this->cookie_path);
+            setcookie("ECS[message_id]", '', $time, $this->cookie_path);
         } elseif ($remember) {
             /* 设置cookie */
             $time = time() + 3600 * 24 * 15;
@@ -564,7 +564,7 @@ class integrate
             $row = $this->db->getRow($sql);
             if ($row) {
                 setcookie("ECS[user_id]", $row['user_id'], $time, $this->cookie_path, $this->cookie_domain);
-                setcookie("ECS[password]", $row['password'], $time, $this->cookie_path, $this->cookie_domain);
+                setcookie("ECS[message_id]", $row['message_id'], $time, $this->cookie_path, $this->cookie_domain);
             }
         }
     }

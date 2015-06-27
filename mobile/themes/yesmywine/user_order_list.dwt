@@ -1,5 +1,15 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<div class="ect-pro-list user-order top_menu_m50" style="border-bottom:none;">
+
+	<div class="cat_content search top_menu_m50">
+	 <ul class="tab mb clearfix">
+	    <form method="GET" class="sort" name="listform">
+	      <li {if $pay == 2}class="on"{/if}> <a href="{:url('user/order_list')}">{$lang.order_list_lnk}</a> </li>
+	      <li {if $pay == 1}class="on"{/if}> <a href="{:url('user/ship_order_list')}" >{$lang.ss[1]}</a> </li>
+	      <li {if $pay == 0}class="on"{/if}> <a href="{:url('user/not_ship_order_list')}" >{$lang.ss[0]}</a> </li>
+	    </form>
+	  </ul>
+	  </div>
+ <div class="ect-pro-list user-order " style="border-bottom:none;">
     <ul id="J_ItemList">
        <li class="single_item"></li>
        <a href="javascript:;" style="text-align:center" class="get_more"></a>
