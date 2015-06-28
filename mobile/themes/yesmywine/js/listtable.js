@@ -546,13 +546,14 @@ listTable.checkOutOrder = function(formId,type)
  */
 listTable.changeOrderShipStatus = function(obj,orderId,status)
 {
-	var order_obj = obj.parent().parent();
+	var obj=$(obj);
+	var order_obj = obj.parent().parent().parent();
 	
-	$.post({
+	$.ajax({
 			type: "post",
 	        url: "index.php?m=default&c=user&a=change_order_shipstatus",     
 	        data: 'orderId='+orderId+"&shipStatus="+status,   
-	        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+	        datatype: "html",//"xml", "html", "script", "json", "jsonp", "text".
 	        success: function(data) {
 	        	//alert(data);
 	        	order_obj.html(data);

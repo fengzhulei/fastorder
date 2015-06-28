@@ -136,11 +136,14 @@
            <dd>{$lang.order_total_quantity}：<span class="ect-color">{$orders.goods_qty_total}</span></dd>
            <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.total_fee}</span></dd>
            <dd>{$lang.order_addtime}：{$orders.order_time}</dd>
+           
           </dl>
           </a>  
           <dl margin-left="8em" style="margin-top: 3em;  display: inline-block;">
              <!--{if $orders.shipping_status eq 0}-->
-			  <dd><button onclick='listTable.changeOrderShipStatus(this,{$orders.order_id},'1')'>发货</button></dd>
+			  <dd><button onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","1")'>发货</button></dd>
+			  <!--{else}-->
+			   <dd><button onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","0")'>设为未发货</button></dd>
 			  <!--{/if}-->
 			 <dd> <button onclick='window.location.href="{:url('user/order_detail', array('order_id'=>$this->_var['orders']['order_id']))}"' style="margin-left:0.3em">查看详情</button></dd>
 		  </dl>

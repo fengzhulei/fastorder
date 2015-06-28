@@ -362,9 +362,10 @@ class UserController extends CommonController {
         
         $order_changed = model('Users')->get_user_order_by_orderid($_SESSION['user_id'],$order_id);
 
-        $this->assign('orders', $order);
+        $this->assign('orders', $order_changed);
         $html = ECTouch::view()->fetch('library/asynclist_info.lbi');
-        die(json_encode($html));
+       
+        die($html);
     }
     /**
      * 订单跟踪

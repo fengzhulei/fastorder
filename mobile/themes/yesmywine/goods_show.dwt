@@ -5,10 +5,11 @@
   <span>{$title}</span> 
   <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
   </header>
-  
+  <!--{if $smarty.session.user_id gt 0}-->
   <nav class="ect-nav ect-nav-list" style="display:none;"> 
    <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
   </nav>
+   <!--{/if}-->
  </div>
  
  <div class="top_menu_m50" style="margin-top: 50px;">

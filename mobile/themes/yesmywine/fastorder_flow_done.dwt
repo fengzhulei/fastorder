@@ -1,9 +1,14 @@
 
-<div class="con top_menu_m50">
+
   <div class="ect-bg">
+   <!--{if $smarty.session.user_id gt 0}-->
   <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
   <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
-</div>
+ <!--{else}-->
+   <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;"  class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header> 
+ <!--{/if }-->
+ </div>
+<div class="con top_menu_m50">
   <section class="ect-bg-colorf ect-padding-lr flow-done">
   		<i class="glyphicon glyphicon-ok"></i>
         <p class="ect-margin-tb">{$lang.remember_order_number}：<b class="ect-color">{$order.order_sn}</b></p>

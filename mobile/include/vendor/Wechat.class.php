@@ -228,6 +228,7 @@ class Wechat
 		$tmpStr = implode( $tmpArr );
 		$tmpStr = sha1( $tmpStr );
 
+		
 		if( $tmpStr == $signature ){
 			return true;
 		}else{
@@ -275,16 +276,17 @@ class Wechat
         		if ($this->checkSignature())
         			die($echoStr);
         		else
-        			die('no access');
+        			die('no access'.ACTION_NAME.'278');
         	}
         }
-
+		
         if (!$this->checkSignature($encryptStr)) {
         	if ($return)
         		return false;
         	else
-        		die('no access');
+        		die('no access'.ACTION_NAME.'286');
         }
+        
         return true;
     }
 

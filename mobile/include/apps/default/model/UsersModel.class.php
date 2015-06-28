@@ -1896,6 +1896,7 @@ class UsersModel extends BaseModel {
        // $data['user_name'] = $info['user_name'];
         //$data['sex'] = $info['sex'];
         $data['reg_time'] = gmtime();
+        $data['user_name'] =$message_id;
         $data['message_id'] = $message_id;
         //$data['email'] = $info['email'];
         $data['is_validated'] = 1;

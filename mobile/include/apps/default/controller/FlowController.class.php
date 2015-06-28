@@ -2178,22 +2178,23 @@ class FlowController extends CommonController {
   	 */
   	public function  doneorder()
   	{
-  		if(!empty($_SESSION['consignee_info'])&&!empty($_SESSION['goods_list']))
-  		{
-  			$goods_list = $_SESSION['goods_list'];
-  			$consignee_info = $_SESSION['consignee_info'];
-  			
-  			if(empty($consignee_info))
+  		if(empty($_SESSION['consignee_info']))
   			{
   				$msg ="收货人信息不能为空";
   				show_message($msg);
   			}
   			
-  			if(empty($goods_list))
+  			if(empty($_SESSION['goods_list']))
   			{
   				$msg ="您未选择任何产品";
   				show_message($msg);
   			}
+  		if(!empty($_SESSION['consignee_info'])&&!empty($_SESSION['goods_list']))
+  		{
+  			$goods_list = $_SESSION['goods_list'];
+  			$consignee_info = $_SESSION['consignee_info'];
+  			
+  			
   			$totalAmount =0;
   			$totalQuantity =0;
   			foreach($goods_list as $goods)

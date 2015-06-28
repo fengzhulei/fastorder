@@ -35,14 +35,17 @@ class WechatController extends CommonController
         $this->orgid = I('get.orgid');
         if (! empty($this->orgid)) {
             $wxinfo = $this->get_config($this->orgid);
-            
+         }  
+         else {
+         	$wxinfo = $this->get_config();
+         } 
             $config['token'] = $wxinfo['token'];
             $config['appid'] = $wxinfo['appid'];
             $config['appsecret'] = $wxinfo['appsecret'];
             $this->weObj = new Wechat($config);
-            $this->weObj->valid();
+           // $this->weObj->valid();
             $this->wechat_id = $wxinfo['id'];
-        }
+        
     }
 
     /**
@@ -115,6 +118,27 @@ class WechatController extends CommonController
         if (! empty($keywords)) {
             //记录用户操作信息
             $this->record_msg($wedata['FromUserName'], $keywords);
+            
+            //链接跳转
+            $menu_keys = array('product_add'=>url('category/add_goods'),
+					            'product_edit'=>url('category/index'),
+					            'send_link'=>url('category/goods_select'),
+					            'order_veiw'=>url('user/order_list')
+					            );
+            if(array_key_exists($keywords, $menu_keys))
+            {
+            	$host='fengzhulei.xicp.net';
+            	$url = $menu_keys[$keywords];
+            	$param = '&message_id='.$wedata['FromUserName'];
+            	
+            	$url = $host.$url.$param;
+            	$url = str_replace('wechat_index', index, $url);
+            	//$this->redirect($url+$param);
+            	// 文本回复                
+                $this->weObj->text($url)->reply();
+                exit;
+            }
+            
             // 多客服
             $rs = $this->customer_service($wedata['FromUserName'], $keywords);
             if (empty($rs)) {
@@ -861,11 +885,20 @@ class WechatController extends CommonController
      * @param string $orgid            
      * @return array
      */
-    private function get_config($orgid)
+    private function get_config($orgid='')
     {
+    	$where = '';
+    	if(empty($orgid))
+    	{
+    		$where ='default_wx = 1 and status = 1';
+    	}
+    	else
+    	{
+    		$where ='orgid = "' . $orgid . '" and status = 1';
+    	}
         $config = $this->model->table('wechat')
             ->field('id, token, appid, appsecret')
-            ->where('orgid = "' . $orgid . '" and status = 1')
+            ->where($where)
             ->find();
         if (empty($config)) {
             $config = array();
