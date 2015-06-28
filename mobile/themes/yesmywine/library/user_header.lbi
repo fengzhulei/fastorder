@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{$ectouch_css_path}">
 <link rel="stylesheet" href="__TPL__/css/user.css">
 <link rel="stylesheet" href="__TPL__/css/photoswipe.css">
+{$stats_code}
 </head>
 
 <body>

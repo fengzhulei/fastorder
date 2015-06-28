@@ -866,7 +866,7 @@ function assign_template($ctype = '', $catlist = array()) {
     ECTouch::view()->assign('ym', explode(',', C('ym')));
     ECTouch::view()->assign('msn', explode(',', C('msn')));
     ECTouch::view()->assign('skype', explode(',', C('skype')));
-    ECTouch::view()->assign('stats_code', C('stats_code'));
+    ECTouch::view()->assign('stats_code', addslashes(C('stats_code')));
     ECTouch::view()->assign('copyright', sprintf(L('copyright'), date('Y'), C('shop_name')));
     ECTouch::view()->assign('shop_name', C('shop_name'));
     ECTouch::view()->assign('service_email', C('service_email'));
