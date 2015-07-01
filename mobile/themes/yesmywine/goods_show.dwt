@@ -1,18 +1,19 @@
-<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
-<div class="con goods_warp">
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+ 
   <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
   <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
   <span>{$title}</span> 
-  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
-  </header>
   <!--{if $smarty.session.user_id gt 0}-->
-  <nav class="ect-nav ect-nav-list" style="display:none;"> 
+  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+  <!--{/if}-->
+  </header>
+   <nav class="ect-nav ect-nav-list" style="display:none;"> 
    <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
   </nav>
-   <!--{/if}-->
- </div>
+
  
- <div class="top_menu_m50" style="margin-top: 50px;">
+ <div class="top_menu_m50" style="">
 <!-- #BeginLibraryItem "/library/goods_show.lbi" --><!-- #EndLibraryItem -->
  </div>
  <!--{if $act eq 'goods_select'}-->
@@ -30,6 +31,6 @@
  
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
-
+</div>
 </body>
 </html>

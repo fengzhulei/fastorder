@@ -96,7 +96,16 @@ class WechatController extends CommonController
                 // 点击菜单
                 $keywords = $wedata['EventKey'];
             } elseif ('VIEW' == $wedata['Event']) {
-                $this->redirect($wedata['EventKey']);
+            	 //链接跳转
+	            $url = $wedata['EventKey'];
+            	$param = '&message_id='.$wedata['FromUserName'];
+            	
+            	$url = $url.$param;
+            	//$url = str_replace('wechat_index', 'index', $url);
+            	//$this->redirect($url+$param);
+            	// 文本回复                
+               $this->redirect($url);
+	            
             } elseif ('SCAN' == $wedata['Event']) {
                 $scene_id = $this->weObj->getRevSceneId();
             }
@@ -132,7 +141,7 @@ class WechatController extends CommonController
             	$param = '&message_id='.$wedata['FromUserName'];
             	
             	$url = $host.$url.$param;
-            	$url = str_replace('wechat_index', index, $url);
+            	$url = str_replace('wechat_index', 'index', $url);
             	//$this->redirect($url+$param);
             	// 文本回复                
                 $this->weObj->text($url)->reply();
@@ -666,9 +675,12 @@ class WechatController extends CommonController
                     $token = $weObj->getOauthAccessToken();
                     if ($token) {
                         $userinfo = $weObj->getOauthUserinfo($token['access_token'], $token['openid']);
-                        self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
+                        //self::update_weixin_user($userinfo, $wxinfo['id'], $weObj);
                         if (! empty($_SESSION['redirect_url'])) {
+                        	//$param='&message_id='.$token['openid'];
+                        	session('message_id',$token['openid']);
                             $redirect_url = session('redirect_url');
+                            $redirect_url = str_replace('&flag=oauth','',$redirect_url);
                             header('Location:' . $redirect_url, true, 302);
                             exit();
                         }
@@ -745,7 +757,7 @@ class WechatController extends CommonController
                 }
                 // 会员注册
                 $domain = get_top_domain();
-                if (model('Users')->register($username, $password, $username . '@' . $domain) !== false) {
+                if (model('Users')->register($username, $password, $username . '@' . $domain.'.com') !== false) {
                     $data['user_rank'] = 99;
                     
                     model('Base')->model->table('users')

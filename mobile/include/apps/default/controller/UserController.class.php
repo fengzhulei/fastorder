@@ -1983,9 +1983,11 @@ class UserController extends CommonController {
         // 未登录处理
         if (empty($_SESSION['user_id']) && !in_array($this->action, $without)) {
             $url = __HOST__ . $_SERVER['REQUEST_URI'];
-            $this->redirect(url('login', array(
+            /*$this->redirect(url('login', array(
                 'referer' => urlencode($url)
             )));
+            */
+            $this->redirect(url($url,array('flag'=>'oauth')));
             exit();
         }
 

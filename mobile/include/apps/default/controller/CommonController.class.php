@@ -104,13 +104,19 @@ class CommonController extends BaseController
         // 会员信息
         self::$user = init_users();
         if (empty($_SESSION['user_id'])) {
-            if (self::$user->get_cookie()) {
+            /*if (self::$user->get_cookie()) {
                 // 如果会员已经登录并且还没有获得会员的帐户余额、积分以及优惠券
                 if ($_SESSION['user_id'] > 0 && ! isset($_SESSION['user_money'])) {
                     model('Users')->update_user_info();
                 }
             } else {
-            	$message_id = $_GET['message_id'];
+            */	
+        			
+            	$message_id =$_SESSION['message_id'];// $_GET['message_id'];
+            	if(empty($message_id))
+            	{
+            		$message_id=$_COOKIE['ECS']['message_id'];
+            	}
             	if(!empty($message_id))
             	{
 	            	$where['message_id'] = $message_id;
@@ -121,6 +127,10 @@ class CommonController extends BaseController
 		            if ($row) {
 		            	 $_SESSION['user_id'] = $row['user_id'];
 		                $_SESSION['user_name'] = $row['user_name'];
+		                
+		                $time = time() + 3600;
+		                setcookie("ECS[user_id]", $row['user_id'], $time, '/');
+		                setcookie("ECS[message_id]", $row['user_name'], $time, '/');
 		                model('Users')->update_user_info();
 		            }
 		            else 
@@ -128,19 +138,53 @@ class CommonController extends BaseController
 		            	//生成一条会员信息
 		            	$user_id = model('Users')->add_user_info($message_id);
 		            	$_SESSION['user_id'] = $user_id;
-	                	$_SESSION['user_name'] = '';
+	                	$_SESSION['user_name'] = $message_id;
+	                	
+	                	$time = time() + 3600;
+		                setcookie("ECS[user_id]", $row['user_id'], $time, '/');
+		                setcookie("ECS[message_id]", $row['user_name'], $time, '/');
 	                	model('Users')->update_user_info();
 		            }
             	}
-            	else 
-            	{
+            	 // session不存在，检查cookie
+	     		 else  if (! empty($_COOKIE['ECS']['user_id']) && ! empty($_COOKIE['ECS']['message_id'])) {
+			            // 找到cookie,验证信息
+			            $where['user_id'] = $_COOKIE['ECS']['user_id'];
+			            $where['message_id'] = $_COOKIE['ECS']['message_id'];
+			            $row = $this->model->table('users')
+			                ->field('user_id, user_name, message_id')
+			                ->where($where)
+			                ->find();
+			            if ($row) {
+			                $_SESSION['user_id'] = $row['user_id'];
+			                $_SESSION['user_name'] = $row['user_name'];
+			                
+			                $time = time() + 3600;
+			                setcookie("ECS[user_id]", $row['user_id'], $time, '/');
+			                setcookie("ECS[message_id]", $row['user_name'], $time, '/');
+			                
+			                model('Users')->update_user_info();
+			            } else {
+			                // 没有找到这个记录
+			                $time = time() - 3600;
+			                setcookie("ECS[user_id]", '', $time, '/');
+			                setcookie("ECS[message_id]", '', $time, '/');
+			            }
+			        }
+		          else
+		          {
 	                $_SESSION['user_id'] = 0;
 	                $_SESSION['user_name'] = '';
 	                $_SESSION['email'] = '';
 	                $_SESSION['user_rank'] = 0;
 	                $_SESSION['discount'] = 1.00;
+	                
+	                // 没有找到这个记录
+	                $time = time() - 3600;
+	                setcookie("ECS[user_id]", '', $time, '/');
+	                setcookie("ECS[message_id]", '', $time, '/');
             	}
-            }
+            //}
         }
         
         // 判断是否支持gzip模式
@@ -153,26 +197,7 @@ class CommonController extends BaseController
             set_affiliate();
         }
         
-        // session不存在，检查cookie
-        if (! empty($_COOKIE['ECS']['user_id']) && ! empty($_COOKIE['ECS']['message_id'])) {
-            // 找到cookie,验证信息
-            $where['user_id'] = $_COOKIE['ECS']['user_id'];
-            $where['message_id'] = $_COOKIE['ECS']['message_id'];
-            $row = $this->model->table('users')
-                ->field('user_id, user_name, message_id')
-                ->where($where)
-                ->find();
-            if ($row) {
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['user_name'] = $row['user_name'];
-                model('Users')->update_user_info();
-            } else {
-                // 没有找到这个记录
-                $time = time() - 3600;
-                setcookie("ECS[user_id]", '', $time, '/');
-                setcookie("ECS[message_id]", '', $time, '/');
-            }
-        }
+        
         
         // search 关键词
         $search_keywords = C('search_keywords');
