@@ -2765,7 +2765,7 @@ del {
 	font-weight: normal;
 	background: #fff;
 	color: #333;
-	font-size: 12px;
+	font-size: 1.2em;
 	border-right: 1px solid #DADADA;
 }
 .cat_content .tab li:nth-child(4) {
@@ -2936,7 +2936,18 @@ del {
 @charset "utf-8";
 /* CSS Document */
 
-
+body {
+	margin:0;
+	padding:0;
+}
+html,body {
+	height: 100%;
+}
+* {
+	font:normal 100% "Microsoft YaHei",Helvetica,Arial,sans-serif;
+	margin:0;
+	padding:0;
+}
 img {
 	border: 0;
 }
@@ -2967,14 +2978,13 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	-webkit-user-modify:read-only;
 	cursor:pointer;
 }
-
-/*menu*/
 .pagebg {
 	width:100%;
 	height:100%;
 	background:#f5f5f5;
-	overflow:hidden;
 }
+
+/*menu*/
 .menu {
 	background:#efefef;
 	border-top:#cdcdcd 1px solid;
@@ -2984,6 +2994,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	left:0;
 	bottom:0;
 	display:inline-table;
+	z-index:1;
 }
 .submenu {
 	display:table-cell;
@@ -3056,7 +3067,6 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	background-size:100% 100%;
 	-webkit-background-size:100% 100%;
 }
-
 .menutitlebox {
 	width:100%;
 	height:16px;
@@ -3073,6 +3083,8 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 .menuitem.selected .menutitletext {
 	color:#f10582;
 }
+
+/*产品添加*/
 .prosalebox {
 	padding:15px;
 	background:#fff;
@@ -3080,7 +3092,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 }
 .inputbox {
 	width:100%;
-	
+	height:40px;
 	border-radius:8px;
 	border:#e6e6e6 1px solid;
 	position:relative;
@@ -3135,12 +3147,11 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	margin:10px 0 0 0;
 }
 .btn_0 {
-	width:50%;
+	width:100%;
 	height:40px;
 	background:#f10582;
 	border:none;
 	border-radius:8px;
-	float:left;
 }
 .btn_0 .text {
 	color:#fff;
@@ -3149,9 +3160,366 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	text-align:ccenter;
 }
 
+/*产品编辑*/
+.prolistbox {
+	width:100%;
+	/*padding:10px 0 65px;*/
+	padding:10px 0;
+	overflow-y:auto;
+}
+.proeditbox {
+	padding:15px;
+	background:#fff;
+	border-top:1px #ddd solid;
+	border-bottom:1px #ddd solid;
+	margin:0 0 10px;
+	overflow:hidden;
+}
+.editbox {
+	width:100%;
+	min-height: 32px;
+	line-height: 32px;
+	margin:0 0 15px;
+	position:relative;
+	white-space: nowrap;
+}
+.editbox label {
+	padding: 0 0 0 35px;
+	position: relative;
+	color:#818181;
+	font-size:16px;
+}
+.icon_edit_1,.icon_edit_2,.icon_edit_3,.icon_edit_4 {
+	width:30px;
+	height:30px;
+	display:inline-block;
+	background:url(../images/icon_edit_1.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+	position:absolute;
+	left:0;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	transform:translateY(-50%);
+}
+.icon_edit_2 {
+	background:url(../images/icon_edit_2.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.icon_edit_3 {
+	background:url(../images/icon_edit_3.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.icon_edit_4 {
+	background:url(../images/icon_edit_4.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.editbox input {
+	width:50%;
+	height:30px;
+	border:#e6e6e6 1px solid;
+	border-radius:5px;
+	background: transparent;
+	/*-webkit-appearance: none; *//*for chrome*/
+}
+.editbox button {
+	width:50px;
+	height:30px;
+	color:#ffffff;
+	font-size:16px;
+	border:none;
+	border-radius:3px;
+	background:#f10582;
+	position:absolute;
+	right:0;
+	top:50%;
+	-webkit-transform:translateY(-50%);
+	transform:translateY(-50%);
+}
+textarea.jjtext {
+	width:65%;
+	height:120px;
+	border:#e6e6e6 1px solid;
+	border-radius:5px;
+	vertical-align: top;
+	background: transparent;
+	-webkit-appearance: none; /*for chrome*/
+}
+.editbox input,.editbox textarea,.sextext {
+	font-size:15px;
+	color:#9a9a9a;
+}
+.sexselectbox {
+	display:inline-block;
+	vertical-align: middle;
+}
+.icon_select_on,.icon_select_off {
+	width:30px;
+	height:30px;
+	display:inline-block;
+	background:url(../images/icon_select_on.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.icon_select_off {
+	background:url(../images/icon_select_off.png) center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.sextext {
+	margin:0 15px 0 0;
+	display: inline-block;
+	vertical-align: 10px;
+}
+.editbox.m_0 {
+	margin:0;
+}
+.editboxtext {
+	font-size:15px;
+	line-height:32px;
+	color:#9a9a9a;
+	white-space: normal;
+}
+
+/*发送链接*/
+.prolinkbox {
+	padding:15px;
+	background:#fff;
+	border-top:1px #ddd solid;
+	border-bottom:1px #ddd solid;
+	margin:0 0 10px;
+	overflow:hidden;
+}
+.linkdetailbox {
+	position:relative;
+	margin:0 0 20px 0;
+}
+.select_integral {
+	width:30px;
+	height:30px;
+	display: inline-block;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.integral_checkbox {
+	display: none;
+}
+.integral_checkbox + label {
+	-webkit-appearance: none;
+	background: url(../images/icon_select_off.png) center center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+	display: inline-block;
+	cursor: pointer;
+	width:100%;
+	height:100%;
+}
+.integral_checkbox:checked + label {
+	background: url(../images/icon_select_on.png) center center no-repeat;
+	background-size:100% 100%;
+	-webkit-background-size:100% 100%;
+}
+.linktitle {
+	display: inline-block;
+	width:240px;
+	font-size:16px;
+	line-height: 30px;
+	color:#818181;
+	white-space: nowrap;
+	overflow: hidden;
+	margin:0 0 0 40px;
+	position:relative;
+}
+.linkprice {
+	font-size:14px;
+	line-height: 30px;
+	color:#9a9a9a;
+	margin:0 0 0 10px;
+	position:absolute;
+	
+	top:0;
+}
+
+.linknumber {
+	font-size:14px;
+	line-height: 30px;
+	color:#9a9a9a;
+	margin:0 0 0 10px;
+	position:absolute;
+	right:0;
+	top:0;
+}
+.btn_linkbox {
+	width:100%;
+	height:35px;
+	margin:30px 0 0 0;
+	text-align:center;
+}
+.btn_linkbox button {
+	width:40%;
+	height:35px;
+	line-height:35px;
+	color:#ffffff;
+	font-size:18px;
+	background:#f10582;
+	border:none;
+	border-radius:5px;
+}
+.btn_linkbox button.m_0 {
+	margin:0 20px 0 0;
+}
+/*订单处理*/
+.orderbox {
+	width:100%;
+	text-align:center;
+	margin:0 0 15px 0;
+}
+.delivery_no.select,.delivery_yes.select {
+	background:#f10582;
+	font-size:18px;
+	color:#ffffff;
+	border-radius:5px 0 0 5px;
+	border:2px solid #f10582;
+}
+.delivery_yes.select {
+	border-radius:0 5px 5px 0;
+}
+.delivery_no,.delivery_no.select {
+	border-right:none;
+}
+.delivery_no,.delivery_yes {
+	background:#ffffff;
+	width:40%;
+	height:35px;
+	line-height:35px;
+	font-size:16px;
+	color:#9a9a9a;
+	border-radius:0 5px 5px 0;
+	border:2px solid #e6e6e6;
+	display: inline-block;
+	margin:0 -4px;
+}
+.delivery_no {
+	border-radius:5px 0 0 5px;
+}
+.delivery_yes,.delivery_yes.select {
+	border-left:none;
+}
+
+.proorderbox {
+	padding:15px;
+	background:#fff;
+	border-top:1px #ddd solid;
+	border-bottom:1px #ddd solid;
+	margin:0 0 10px;
+	overflow:hidden;
+}
+.ordertime {
+	position:relative;
+	border-bottom:1px solid #e6e6e6;
+	padding:0 0 5px 0;
+}
+.btn_order {
+	width:60px;
+	height:30px;
+	line-height:30px;
+	color:#ffffff;
+	font-size:16px;
+	border:none;
+	border-radius:5px;
+	background:#f10582;
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:1;
+}
+.ordertimetetxt {
+	font-size:16px;
+	line-height:30px;
+	color:#666;
+}
+.memberinfo {
+	border-bottom:1px solid #e6e6e6;
+}
+.member {
+	position:relative;
+}
+.membername {
+	font-size:16px;
+	line-height:30px;
+	color:#f10582;
+	margin:0 10px 0 0;
+}
+.memberphone {
+	font-size:14px;
+	line-height:30px;
+	color:#9a9a9a;
+	position:absolute;
+	top:0;
+	right:0;
+}
+.add {
+	width:100%;
+	font-size:14px;
+	line-height:30px;
+	color:#9a9a9a;
+}
+.proinfo {
+
+}
+.protitle {
+	font-size:16px;
+	line-height:30px;
+	color:#818181;
+	position: relative;
+	text-indent: 35px;
+	margin: 5px 0 0 0;
+}
+.prodetail {
+	
+}
+.prodetail .text1,.prodetail .text2 {
+	font-size:14px;
+	line-height:30px;
+	color:#9a9a9a;
+}
+.prodetail .text1 {
+	margin:0 20px 0 0;
+}
+
+
 
 
 @media screen and (max-width: 320px) {
+/*产品添加*/
+.proeditbox {
+	padding:10px;
+}
+
+/*产品编辑*/
+.editbox input {
+	width:45%;
+}
+.sextext {
+	margin:0 10px 0 0;
+	vertical-align: 5px;
+}
+.icon_edit_1,.icon_edit_2,.icon_edit_3,.icon_edit_4,.icon_select_on,.icon_select_off  {
+	width:24px;
+	height:24px;
+}
+.editbox label {
+	padding: 0 0 0 30px;
+}
+/*发送链接*/
+.linktitle {
+	width:176px;
+}
+
 }
 
 @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
@@ -3173,6 +3541,28 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	font-size:18px;
 }
 
+
+/*产品编辑*/
+.editbox label {
+	padding: 0 0 0 35px;
+	font-size:18px;
+}
+.editbox input,.editbox textarea,.sextext,.editboxtext {
+	font-size:17px;
+}
+.editbox button {
+  width: 60px;
+}
+/*发送链接*/
+.linktitle {
+	width:256px;
+}
+.membername {
+	font-size:18px;
+}
+.prodetail .text1,.prodetail .text2,.memberphone,.add {
+	font-size:15px;
+}
 }
 
 @media screen and (min-width: 800px) {
@@ -3182,7 +3572,6 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	margin:0 auto;
 	height:603px;
 	position: relative;
-	background:#fff;
 }
 .menu {
 	position:absolute;
@@ -3195,6 +3584,5 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	margin:0 auto;
 	height:603px;
 	position: relative;
-	background:#fff;
 }
 }

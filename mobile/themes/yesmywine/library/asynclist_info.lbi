@@ -3,41 +3,34 @@
 <!--{if $goods}-->
 <li>
  <form id="goods_form_{$goods.goods_id}" method = "post" onsubmit="return false;"> 
-<dl width ="60%">
-<dd>
-<input type="hidden" id="goods_id_{$goods.goods_id}" name="goods_id" value="{$goods.goods_id}" />
-</dd>
-<dt >
-{$lang.goods_name}： <span id="goods_name_{$goods.goods_id}" class="co">{$goods.name}</span>
- <span id="bak_goods_name_{$goods.goods_id}" style="display:none" >{$goods.name}</span> 
-</dt>
-<dd >
-{$lang.goods_price}：<span id="goods_price_{$goods.goods_id}" class="co">{$goods.goods_price}</span><b class="co">{$lang.unit_yuan}</b>
-<span id="bak_goods_price_{$goods.goods_id}"  style="display:none">{$goods.goods_price}</span>
-</dd>
-
-<dd > 
-{$lang.goods_brief}：<span id="goods_brief_{$goods.goods_id}" class="co" >{if $goods.goods_brief}{$goods.goods_brief}{else}{$lang.no}{/if}</span>
-<span id="bak_goods_brief_{$goods.goods_id}" style="display:none" >{if $goods.goods_brief}{$goods.goods_brief}{else}{$lang.no}{/if}</span> 
-</dd>
-
-<dd >
-{$lang.goods_status}：<span id="goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" class="co" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span> 
-<span id="bak_goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" style="display:none" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>   
-</dd>
-
-<dd >
-<div style="float:left" >
-<span>{$lang.sort_sales}：<b class="co">{$goods.sales_count}</b></span> 
-</div>
-<button style="float:right" id = "goods_edit_{$goods.goods_id}"   onclick="listTable.editProduct(this, 'edit_goods_info', {$goods.goods_id})" >编辑产品</button>
-<button style="float:right;right;margin-right: 5px;display:none" id = "goods_del_{$goods.goods_id}"  onclick="window.location.href =url {:url('category/del_goods' ,array('goods_id'=>$goods.goods_id))}" >删除</button>
-<button style="float:right;right;margin-right: 5px;display:none" id = "goods_cacel_{$goods.goods_id}"  onclick="listTable.cacelProduct(this, 'edit_goods_info', {$goods.goods_id})" >取消</button>
-<button style="float:right;margin-right: 5px;display:none" id = "goods_save_{$goods.goods_id}"  onclick="listTable.saveProduct(this, 'edit_goods_info', {$goods.goods_id})" >保存</button>
- <div id="tipsmsg_{$goods.goods_id}" style="float:right;right;margin-right: 5px;"  class="co"></div>
-</dd>
-</dl>
-
+ 	<input type="hidden" id="goods_id_{$goods.goods_id}" name="goods_id" value="{$goods.goods_id}" />
+ 	<div class="editbox">
+    	<label><span class="icon_edit_1"></span>{$lang.goods_name}:</label>
+        <span id="goods_name_{$goods.goods_id}" class="editboxtext">{$goods.name}</span>
+        <span id="bak_goods_name_{$goods.goods_id}" style="display:none" >{$goods.name}</span> 
+        <button id = "goods_edit_{$goods.goods_id}"   onclick="listTable.editProduct(this, 'edit_goods_info', {$goods.goods_id})"><span class="text">修改</span></button>        
+		<button style="margin-right: 5px;display:none" id = "goods_save_{$goods.goods_id}"  onclick="listTable.saveProduct(this, 'edit_goods_info', {$goods.goods_id})" ><span class="text">保存</span></button>        
+    </div>
+	<div class="editbox">
+    	<label><span class="icon_edit_2"></span>{$lang.goods_price}:</label>
+        <span id="goods_price_{$goods.goods_id}" class="editboxtext">{$goods.goods_price}</span>
+        <span id="bak_goods_price_{$goods.goods_id}"  style="display:none">{$goods.goods_price}</span>
+        <button style="right;margin-right: 5px;display:none" id = "goods_cacel_{$goods.goods_id}"  onclick="listTable.cacelProduct(this, 'edit_goods_info', {$goods.goods_id})" ><span class="text">取消</span></button>
+    </div>
+	<div class="editbox">
+    	<label><span class="icon_edit_3"></span>{$lang.goods_brief}:</label>
+        <span id="goods_brief_{$goods.goods_id}" class="editboxtext">{if $goods.goods_brief}{$goods.goods_brief}{else}{$lang.no}{/if}</span>
+        <span id="bak_goods_brief_{$goods.goods_id}" style="display:none" >{if $goods.goods_brief}{$goods.goods_brief}{else}{$lang.no}{/if}</span> 
+    </div>
+	<div class="editbox m_0">
+    	<label><span  class="icon_edit_4"></span>{$lang.goods_status}:</label>
+    	 <div class="sexselectbox">
+        <span id="goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>
+        <span id="bak_goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" style="display:none" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>
+        </div>     
+	</div>
+	<div id="tipsmsg_{$goods.goods_id}" style="text-align:center;margin-right: 5px;"  class="co"></div>
+	<label style="display:none" id = "goods_del_{$goods.goods_id}"   ></label>
  </form>
 
 </li>

@@ -17,8 +17,9 @@
       <input type="hidden" name="keywords" value="{$keywords}" />
     </form>
   </ul>
-  <div class="searchBox-row mb" id="J_ItemList">
-    <div class="single_item box"></div>
-    <a href="javascript:;" class="get_more"></a> </div>
+  <div class="prolistbox" id="J_ItemList">
+    <div class="proeditbox box"></div>
+    <a href="javascript:;" class="get_more"></a> 
+   </div>
 </div>
 <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>

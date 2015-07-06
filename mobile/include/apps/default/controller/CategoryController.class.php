@@ -103,7 +103,7 @@ class CategoryController extends CommonController {
         foreach ($goodslist as $key => $goods) {
             $this->assign('goods', $goods);
             $sayList[] = array(
-                'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
+                'proeditbox' => ECTouch::view()->fetch('library/asynclist_info.lbi')
             );
         }
         die(json_encode($sayList));
@@ -693,7 +693,7 @@ class CategoryController extends CommonController {
     {
     	if ($_SERVER ['REQUEST_METHOD'] == 'GET') {
     		$this->assign('act','add_goods');
-    		$this->assign('page_title','增加产品');
+    		$this->assign('title','增加产品');
     		$this->display('fastorder_goods.dwt');
     	}
     	else 

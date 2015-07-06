@@ -1,53 +1,33 @@
-<div class="cat_content search">
-  
-  <div class="searchBox-row mb" id="J_ItemList">
-    <div class="single_item box">
+   <div class="prosalebox">
     <form id="goods_form" method = "post" onsubmit="return false;"> 
-<dl width ="60%">
-<dd>
-<input type="hidden" id="goods_id" name="goods_id" value="" />
-</dd>
-<dt  >
-{$lang.goods_name}:<input id="goods_name"  name="goods_name"></input>
-</dt>
 
-<dd   style="margin-top: 5px">
-{$lang.goods_price}:<input id="goods_price" name="goods_price" ></input><b class="co">{$lang.unit_yuan}</b>
-</dd>
 
-<dd   style="margin-top: 5px"> 
-{$lang.goods_brief}:<textarea id="goods_brief" name="goods_brief" ></textarea>
-</dd>
+	<input type="hidden" id="goods_id" name="goods_id" value="" />
 
-<dd   style="margin-top: 5px" >
-{$lang.goods_status}:
-<input type="radio" value ="1" checked="true" name="goods_status" />{$lang.goods_onsale}
-<input type="radio" value ="0" name="goods_status" />{$lang.goods_not_onsale} 
-</dd>
-<dd   style="margin-top: 5px">
-<div  class="button-group">
-	 <table style="width:100%">
-	 <tr>
-		<td >
-			<button style="float:right;margin-left: 5px;" id = "goods_add"  onclick="listTable.addProduct()" >保存</button>
-		</td>
-		<td >
-		   <button style="margin-right: 5px;" id = "goods_reset"  onclick="listTable.resetProduct(this, 'reset_goods_info', '')" >重置</button>
-		</td>
-	 </tr>
-	 <tr >
-		<td colspan="2" style="text-align: center;">
-		 <div id="tipsmsg" style="margin-right: 5px;"  class="co"></div>
-		</td>
-	 </tr>
-	</table>
- </div>
-</dd>
-</dl>
-
- </form>
-    
+	<div class="inputbox">
+    	<span class="icon_pro"></span>
+        <input id="goods_name"  name="goods_name" placeholder="{$lang.goods_name}" />
     </div>
-    <a href="javascript:;" class="get_more"></a> </div>
+	<div class="inputbox">
+    	<span class="icon_price"></span>
+        <input id="goods_price" name="goods_price"  placeholder="{$lang.goods_price}({$lang.unit_yuan})" />
+    </div>
+	<div class="textareabox">
+        <textarea  id="goods_brief" name="goods_brief" placeholder="{$lang.goods_brief}"></textarea>
+    </div>
+    <div class="btnbox">
+    	<button id = "goods_add" class="btn_0" onclick="listTable.addProduct()">
+        	<span class="text" >上架销售</span>
+        </button>
+         <button class="btn_0" id = "goods_reset"  onclick="listTable.resetProduct(this, 'reset_goods_info', '')" >
+         <span  class="text">重置</span>
+         </button>
+    </div>
+    <div id="tipsmsg" style="margin-right: 5px;text-align:center"  class="co"></div>
+	<input type="hidden" value ="1" name="goods_status" /> 
+
+ 	</form>    
+    </div>  
 </div>
+
 <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>

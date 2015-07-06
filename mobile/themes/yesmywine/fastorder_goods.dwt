@@ -20,7 +20,7 @@
 	<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 	<script type="text/javascript">
 		//get_asynclist('{:url('category/asynclist', array('id'=>$this->_var['id'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}' , '__TPL__/images/loader.gif');
-		get_asynclist('{:url('category/asynclist', array('type'=>$this->_var['type'],'page'=>$this->_var['page']))}' , '__TPL__/images/loader.gif');
+		get_asynclist('{:url('category/asynclist', array('type'=>$this->_var['type'],'page'=>$this->_var['page']))}' , '__TPL__/images/loader.gif','.proeditbox');
 	</script>
    <!--{/if}-->
     </div>

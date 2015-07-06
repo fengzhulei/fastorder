@@ -17,12 +17,19 @@
 <!-- #BeginLibraryItem "/library/goods_show.lbi" --><!-- #EndLibraryItem -->
  </div>
  <!--{if $act eq 'goods_select'}-->
+ <div class="btnbox">
+    	<button class="btn_0" onclick='listTable.generateLink("listForm","send")'>
+        	<span class="text">生成链接</span>
+        </button>
+    </div>
+ <!--
  <table>
  	<tr>
 	 <td><button onclick='listTable.generateLink("listForm","send")'>生成链接</button></td>
-	 <!--<td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>-->
+	 <td><button onclick='listTable.generateLink("listForm","share")'>分享到朋友圈</button></td>
 	</tr>
  </table>
+ -->
  <!--{elseif $act eq 'goods_show'}-->  
   <!-- #BeginLibraryItem "/library/fastorder_consignee.lbi" --><!-- #EndLibraryItem -->
  <!--{/if}-->

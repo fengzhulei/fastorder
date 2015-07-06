@@ -1,7 +1,8 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
 function get_asynclist(url, src) {
-    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img src="' + src + '" /></div>'})
+	var template=arguments[2]?arguments[2]:'.single_item';
+    $('#J_ItemList').more({'address': url, 'spinner_code': '<div style="text-align:center; margin:10px;"><img src="' + src + '" /></div>','template':template})
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             $('.get_more').click();

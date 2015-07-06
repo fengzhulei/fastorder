@@ -395,10 +395,11 @@ listTable.radio = function(obj, act, id)
   txt.type='radio';
   txt.name=id;
   txt.value = '1';
-  txt.checked = (val == 1)?true:false;
-  //txt.innerHTML="上架";
+  txt.checked = (val == 1)?true:false; 
+  //txt.innerHTML='<span class="icon_select_on"></span>';
   
-  var label = document.createElement("label");
+  var label = document.createElement("span");
+  
   label.innerHTML="上架";
   
   /* 创建一个radio框 */
@@ -406,9 +407,10 @@ listTable.radio = function(obj, act, id)
   txt1.type='radio';
   txt1.name=id;
   txt1.value = '0';
-  txt1.checked = (val == 1)?false:true;
+  txt1.checked = (val == 1)?false:true;  
   //txt1.innerHTML="<label>下架</label>";
-  var label1 = document.createElement("label");
+  var label1 = document.createElement("span");
+  
   label1.innerHTML="下架";
   
   /* 隐藏对象中的内容，并将输入框加入到对象中 */
@@ -472,6 +474,11 @@ listTable.generateLink = function(formId,type)
 	var form = document.getElementById(formId);
 	var goodsIds = this.getSelectedId(form);
 	//var data = JSON.stringify(goodsIds);
+	if(goodsIds == '')
+	{
+	  alert("您没有选中任何产品，请至少选择一个产品进行发送!");
+	  return;
+	}
 	$.ajax({
         type: "post",
         url: "index.php?m=default&c=Category&a=generate_link",     
