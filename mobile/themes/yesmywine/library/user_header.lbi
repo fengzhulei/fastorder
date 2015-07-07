@@ -15,9 +15,11 @@
 
 <body>
 <div class="con">
+
 <div class="ect-bg">
   <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
   <nav class="ect-nav ect-nav-list" style="display:none;">
+    
     <ul class="ect-diaplay-box text-center">
       <li class="ect-box-flex"><a href="{:url('category/add_goods')}"><i class="ect-icon ect-icon-home"></i>{$lang.goods_add}</a></li>
 	  <li class="ect-box-flex"><a href="{:url('category/index')}"><i class="ect-icon ect-icon-cate"></i>{$lang.goods_edit}</a></li>
@@ -26,3 +28,4 @@
 	</ul>
   </nav>
 </div>
+

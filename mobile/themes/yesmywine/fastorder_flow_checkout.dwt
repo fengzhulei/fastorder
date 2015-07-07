@@ -41,6 +41,7 @@
               <dt class="pull-left"> 
                {$goods.goods_name}
                </dt>
+               <dd class="pull-left list-num">{$goods.goods_price}</dd>
               <dd class="pull-left list-num">x {$goods.goods_number}</dd>
               <dd class="pull-right">{$goods.subtotal}</dd>
             </dl>

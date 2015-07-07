@@ -556,6 +556,8 @@ class UsersModel extends BaseModel {
                 "order_info WHERE user_id = '$user_id' " . $pay . " ORDER BY add_time DESC LIMIT $start , $num";
         $res = $this->query($sql, $num, $start);
         foreach ($res as $key => $value) {
+			$goods_sql = "select goods_name,goods_number,goods_price from ". $this->pre ."order_goods where order_id = $value[order_id]";
+			$goods = $this->query($goods_sql);
 			/*
         	if ($value['order_status'] == OS_UNCONFIRMED) {
                 $value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
@@ -595,7 +597,7 @@ class UsersModel extends BaseModel {
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
-                //'handler' => $value['handler']
+                'order_goods' => $goods
             );
         }
         return $arr;
@@ -617,6 +619,8 @@ class UsersModel extends BaseModel {
                 " FROM " . $this->pre .
                 "order_info WHERE user_id = '$user_id' and order_id ='$order_id'";
         $value = $this->row($sql);
+        $goods_sql = "select goods_name,goods_number,goods_price from ". $this->pre ."order_goods where order_id = $value[order_id]";
+		$goods = $this->query($goods_sql);
         	/*
         	if ($value['order_status'] == OS_UNCONFIRMED) {
                 $value['handler'] = "<a href=\"" . url('user/cancel_order', array('order_id' => $value['order_id'])) . "\" onclick=\"if (!confirm('" . L('confirm_cancel') . "')) return false;\">" . L('cancel') . "</a>";
@@ -656,7 +660,7 @@ class UsersModel extends BaseModel {
                 'shipping_id' => $value['shipping_id'],
                 'total_fee' => price_format($value['total_fee'], false),
                 'url' => url('user/order_detail', array('order_id' => $value['order_id'])),
-                //'handler' => $value['handler']
+                'order_goods' => $goods
             );
         
         return $arr;

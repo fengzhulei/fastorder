@@ -26,7 +26,7 @@
     	<label><span  class="icon_edit_4"></span>{$lang.goods_status}:</label>
     	 <div class="sexselectbox">
         <span id="goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>
-        <span id="bak_goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" style="display:none" >{if $goods.is_on_sale eq 1}{$lang.goods_onsale}{else}{$lang.goods_not_onsale}{/if}</span>
+        <span id="bak_goods_status_{$goods.goods_id}" value ="{$goods.is_on_sale }" style="display:none" >{$goods.is_on_sale}</span>
         </div>     
 	</div>
 	<div id="tipsmsg_{$goods.goods_id}" style="text-align:center;margin-right: 5px;"  class="co"></div>
@@ -114,33 +114,37 @@
 <!-- 文章列表end--> 
 
 <!-- 用户订单 start--> 
-<!--{if $orders}--><a href="#">
-          <dl>
-            <dt>
-              <h4 class="title">{$lang.order_number}：{$orders.order_sn}</h4>
-            </dt>
-           <dd>{$lang.order_status}：{$orders.order_status}</dd>
+<!--{if $orders}-->
+		<div class="ordertime">
+		  <!--{if $orders.shipping_status eq 0}-->
+			  <button class="btn_order" onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","1")'>发货</button>
+		  <!--{else}-->
+			   <button class="btn_order" onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","0")'>设为未发货</button>
+		  <!--{/if}-->
+		   <div> <span class="ordertimetetxt">{$lang.order_addtime}：{$orders.order_time}</span></div>
+           <div> <span class="ordertimetetxt">{$lang.order_number}：{$orders.order_sn}</span></div>
+           <div> <span class="ordertimetetxt">{$lang.order_status}：{$orders.order_status}</span></div>
             <!--{if $orders.shipping_status eq 1}-->
-           <dd>{$lang.order_shiptime}：{$orders.shipping_time}</dd>
+           <span class="ordertimetetxt">{$lang.order_shiptime}：{$orders.shipping_time}</span>
            <!--{/if}-->
-           <dd>{$lang.consignee_name}:{$orders.consignee}</dd>
-           <dd>{$lang.mobile}:{$orders.mobile}</dd>
-           <dd>{$lang.detailed_address}:{$orders.address}</dd>
-           <dd>{$lang.order_total_quantity}：<span class="ect-color">{$orders.goods_qty_total}</span></dd>
-           <dd>{$lang.order_total_fee}：<span class="ect-color">{$orders.total_fee}</span></dd>
-           <dd>{$lang.order_addtime}：{$orders.order_time}</dd>
-           
-          </dl>
-          </a>  
-          <dl margin-left="8em" style="margin-top: 3em;  display: inline-block;">
-             <!--{if $orders.shipping_status eq 0}-->
-			  <dd><button onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","1")'>发货</button></dd>
-			  <!--{else}-->
-			   <dd><button onclick='listTable.changeOrderShipStatus(this,"{$orders.order_id}","0")'>设为未发货</button></dd>
-			  <!--{/if}-->
-			 <dd> <button onclick='window.location.href="{:url('user/order_detail', array('order_id'=>$this->_var['orders']['order_id']))}"' style="margin-left:0.3em">查看详情</button></dd>
-		  </dl>
-
+           <div><span class="ordertimetetxt">{$lang.order_total_fee}：<span class="ect-color">{$orders.total_fee}</span></span></div>
+        </div>
+        <div class="memberinfo">
+        	<div class="member">
+                <span class="membername">{$orders.consignee}</span>
+                <span class="memberphone">{$orders.mobile}</span>
+            </div>
+            <div class="add">{$orders.address}</div>
+        </div>
+    	<div class="proinfo">
+    	<!-- {foreach from=$orders.order_goods item = order_goods}-->
+        	<div class="protitle"><span class="icon_edit_1"></span>{$order_goods.goods_name}</div>
+            <div class="prodetail">
+            	<span class="text1">数量:{$order_goods.goods_number}</span>
+                <span class="text2">单价:{$order_goods.goods_price}</span>
+            </div>
+        <!--{/foreach}-->
+        </div>
 <!-- {/if}--> 
 <!-- 用户订单end--> 
 

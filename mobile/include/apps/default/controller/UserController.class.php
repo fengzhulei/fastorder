@@ -320,7 +320,7 @@ class UserController extends CommonController {
             foreach ($order_list as $key => $order) {
                 $this->assign('orders', $order);
                 $sayList[] = array(
-                    'single_item' => ECTouch::view()->fetch('library/asynclist_info.lbi')
+                    'prolinkbox' => ECTouch::view()->fetch('library/asynclist_info.lbi')
                 );
             }
             die(json_encode($sayList));

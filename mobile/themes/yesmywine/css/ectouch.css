@@ -1143,7 +1143,7 @@ select {
 .btn-info {
 	border: none;
 	background: #bb0f2e;
-	padding: 0.5em 0;
+	/*padding: 0.5em 0;*/
 	font-size: 1.3em;
 	font-family: "微软雅黑";
 	border-radius: 0;
@@ -2935,19 +2935,22 @@ del {
 
 @charset "utf-8";
 /* CSS Document */
-
+/*
 body {
 	margin:0;
 	padding:0;
 }
+
 html,body {
 	height: 100%;
 }
+
 * {
 	font:normal 100% "Microsoft YaHei",Helvetica,Arial,sans-serif;
 	margin:0;
 	padding:0;
 }
+*/
 img {
 	border: 0;
 }
@@ -3145,6 +3148,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	height:40px;
 	text-align:center;
 	margin:10px 0 0 0;
+	display: inline-flex;
 }
 .btn_0 {
 	width:100%;
@@ -3227,7 +3231,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 }
 .editbox button {
 	width:50px;
-	height:30px;
+	
 	color:#ffffff;
 	font-size:16px;
 	border:none;
@@ -3378,22 +3382,22 @@ textarea.jjtext {
 	text-align:center;
 	margin:0 0 15px 0;
 }
-.delivery_no.select,.delivery_yes.select {
+.delivery.on,.delivery.on {
 	background:#f10582;
 	font-size:18px;
 	color:#ffffff;
 	border-radius:5px 0 0 5px;
 	border:2px solid #f10582;
 }
-.delivery_yes.select {
+.delivery.on {
 	border-radius:0 5px 5px 0;
 }
-.delivery_no,.delivery_no.select {
+.delivery,.delivery.on {
 	border-right:none;
 }
-.delivery_no,.delivery_yes {
+.delivery,.delivery {
 	background:#ffffff;
-	width:40%;
+	width:30%;
 	height:35px;
 	line-height:35px;
 	font-size:16px;
@@ -3403,10 +3407,10 @@ textarea.jjtext {
 	display: inline-block;
 	margin:0 -4px;
 }
-.delivery_no {
+.delivery {
 	border-radius:5px 0 0 5px;
 }
-.delivery_yes,.delivery_yes.select {
+.delivery,.delivery.on {
 	border-left:none;
 }
 
@@ -3424,9 +3428,9 @@ textarea.jjtext {
 	padding:0 0 5px 0;
 }
 .btn_order {
-	width:60px;
+	width:auto;
 	height:30px;
-	line-height:30px;
+	
 	color:#ffffff;
 	font-size:16px;
 	border:none;
@@ -3434,7 +3438,7 @@ textarea.jjtext {
 	background:#f10582;
 	position:absolute;
 	top:0;
-	right:0;
+	right:5px;
 	z-index:1;
 }
 .ordertimetetxt {

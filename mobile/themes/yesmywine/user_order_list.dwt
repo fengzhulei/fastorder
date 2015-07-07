@@ -1,20 +1,20 @@
 <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
 
-	<div class="cat_content search top_menu_m50">
-	 <ul class="tab mb clearfix">
-	    <form method="GET" class="sort" name="listform">
-	      <li {if $pay == 2}class="on"{/if}> <a href="{:url('user/order_list')}">{$lang.order_list_lnk}</a> </li>
-	      <li {if $pay == 1}class="on"{/if}> <a href="{:url('user/ship_order_list')}" >{$lang.ss[1]}</a> </li>
-	      <li {if $pay == 0}class="on"{/if}> <a href="{:url('user/not_ship_order_list')}" >{$lang.ss[0]}</a> </li>
+<div class="prolistbox top_menu_m50">
+	 <div class="orderbox clearfix">
+	    <form method="GET" class="" name="listform">
+	      <li {if $pay == 2}class="delivery on"{else}class="delivery"{/if}> <a href="{:url('user/order_list')}">{$lang.order_list_lnk}</a> </li>
+	      <li {if $pay == 1}class="delivery on"{else}class="delivery"{/if}> <a href="{:url('user/ship_order_list')}" >{$lang.ss[1]}</a> </li>
+	      <li {if $pay == 0}class="delivery on"{else}class="delivery"{/if}> <a href="{:url('user/not_ship_order_list')}" >{$lang.ss[0]}</a> </li>
 	    </form>
-	  </ul>
 	  </div>
- <div class="ect-pro-list user-order " style="border-bottom:none;">
-    <ul id="J_ItemList">
-       <li class="single_item"></li>
-       <a href="javascript:;" style="text-align:center" class="get_more"></a>
-    </ul>
-</div>
+	
+	 <div class="ect-pro-list user-order " style="border-bottom:none;">
+	    <ul id="J_ItemList">
+	       <li class="prolinkbox"></li>
+	       <a href="javascript:;" style="text-align:center" class="get_more"></a>
+	    </ul>
+	</div>
 </div>
 <!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
@@ -23,7 +23,7 @@
 {foreach from=$lang.merge_order_js item=item key=key}
     var {$key} = "{$item}";
 {/foreach}
-get_asynclist('index.php?m=default&c=user&a=async_order_list&pay={$pay}' , '__TPL__/images/loader.gif');
+get_asynclist('index.php?m=default&c=user&a=async_order_list&pay={$pay}' , '__TPL__/images/loader.gif','.prolinkbox');
 </script> 
 <script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
 </body></html>

@@ -1,6 +1,36 @@
+
 <ul class="ect-diaplay-box text-center">
   <li class="ect-box-flex"><a href="{:url('category/add_goods')}"><i class="ect-icon ect-icon-home"></i>{$lang.goods_add}</a></li>
   <li class="ect-box-flex"><a href="{:url('category/index')}"><i class="ect-icon ect-icon-cate"></i>{$lang.goods_edit}</a></li>
   <li class="ect-box-flex"><a href="{:url('category/goods_select')}"><i class="ect-icon ect-icon-search"></i>{$lang.goods_send}</a></li>
   <li class="ect-box-flex"><a href="{:url('user/order_list')}"><i class="fa fa-file-text"></i>{$lang.goods_order}</a></li>
 </ul>
+<!--
+<div class="menu">
+	<div class="submenu">
+    	<div class="menuitem modify" onclick="{:url('category/add_goods')}>
+            <div class="menuiconbox"><span class="icon_menu_add"></span></div>
+            <div class="menutitlebox"><span class="menutitletext">{$lang.goods_add}</span></div>
+        </div>
+    </div>
+	<div class="submenu">
+    	<div class="menuitem modify" onclick="{:url('category/index')}">
+            <div class="menuiconbox"><span class="icon_menu_edit"></span></div>
+            <div class="menutitlebox"><span class="menutitletext">{$lang.goods_edit}</span></div>
+        </div>
+    </div>
+	<div class="submenu">
+    	<div class="menuitem modify" onclick="{:url('category/goods_select')}">
+            <div class="menuiconbox"><span class="icon_menu_link"></span></div>
+            <div class="menutitlebox"><span class="menutitletext">{$lang.goods_send}</span></div>
+        </div>
+    </div>
+	<div class="submenu">
+    	<div class="menuitem selected modify" onclick="{:url('user/order_list')}">
+            <div class="menuiconbox"><span class="icon_menu_order"></span></div>
+            <div class="menutitlebox"><span class="menutitletext">{$lang.goods_order}</span></div>
+        </div>
+    </div>
+</div>
+
+-->
