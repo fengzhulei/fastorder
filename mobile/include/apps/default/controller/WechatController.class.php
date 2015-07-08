@@ -650,7 +650,7 @@ class WechatController extends CommonController
     /**
      * 微信OAuth操作
      */
-    static function do_oauth()
+    static function do_oauth($flag = '')
     {
         // 默认公众号信息
         $wxinfo = model('Base')->model->table('wechat')
@@ -665,7 +665,10 @@ class WechatController extends CommonController
             // 微信通验证
             $weObj = new Wechat($config);
             // 微信浏览器浏览
-            $flag = I('get.flag');
+            if(empty($flag))
+            {
+            	 $flag = I('get.flag');
+            }           
             if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && $flag == 'oauth') {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
