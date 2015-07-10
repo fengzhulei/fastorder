@@ -19,3 +19,5 @@
        	<p class="ect-margin-tb text-center">{$order_submit_ok}</p>
   </section>
 </div>
+ <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+ 

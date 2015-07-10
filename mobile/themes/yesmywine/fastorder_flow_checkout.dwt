@@ -57,11 +57,20 @@
 	  <br />  
   
 	</div>
-      <div  class="btnbox">
+ <table style="width: 100%;">
+  
+    <tr class="btnbox">
+    <th style="width: 50%;">
       <input type="button" class="btn_0 ect-colorf"  onclick="javascript:history.go(-1)" value="返回修改"/ > 
+    </th>
+    <th style="width: 50%;">
        <input type="submit" name="submit" value="{$lang.order_submit}" class="btn_0 ect-colorf"/>
         <input type="hidden" name="step" value="done" />
-      </div>
+    </th>
+    </tr>
+    </table>
     </form>
   </div>
 </div>
+ <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+ 
