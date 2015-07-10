@@ -15,14 +15,21 @@
 	<div class="textareabox">
         <textarea  id="goods_brief" name="goods_brief" placeholder="{$lang.goods_brief}"></textarea>
     </div>
-    <div class="btnbox">
+    <table style="width: 100%;">
+  
+    <tr class="btnbox">
+    <th style="width: 50%;">
     	<button id = "goods_add" class="btn_0" onclick="listTable.addProduct()">
         	<span class="text" >上架销售</span>
         </button>
+        </th>
+        <th style="width: 50%;">
          <button class="btn_0" id = "goods_reset"  onclick="listTable.resetProduct(this, 'reset_goods_info', '')" >
          <span  class="text">重置</span>
          </button>
-    </div>
+         </th>
+    </tr>
+    </table>
     <div id="tipsmsg" style="margin-right: 5px;text-align:center"  class="co"></div>
 	<input type="hidden" value ="1" name="goods_status" /> 
 
