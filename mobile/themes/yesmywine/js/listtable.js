@@ -554,7 +554,7 @@ listTable.checkOutOrder = function(formId,type)
 listTable.changeOrderShipStatus = function(obj,orderId,status)
 {
 	var obj=$(obj);
-	var order_obj = obj.parent().parent().parent();
+	var order_obj = obj.parent().parent();
 	
 	$.ajax({
 			type: "post",
