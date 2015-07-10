@@ -25,5 +25,5 @@
 {/foreach}
 get_asynclist('index.php?m=default&c=user&a=async_order_list&pay={$pay}' , '__TPL__/images/loader.gif','.prolinkbox');
 </script> 
-<script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
+<script type="text/javascript" src="__TPL__/js/listtable.js{$js_css_version}"></script> 
 </body></html>

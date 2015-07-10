@@ -215,10 +215,11 @@ class CommonController extends BaseController
         defined('__TPL__') or define('__TPL__', __ROOT__ . '/themes/' . C('template'));
         $stylename = C('stylename');
         if (! empty($stylename)) {
-            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch_' . C('stylename') . '.css');
+            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch_' . C('stylename') . '.css?v='.C('js_css_version'));
         } else {
-            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch.css');
+            $this->assign('ectouch_css_path', __ROOT__ . '/themes/' . C('template') . '/css/ectouch.css?v='.C('js_css_version'));
         }
+        $this->assign('js_css_version','?v='.C('js_css_version'));
     }
 }
 

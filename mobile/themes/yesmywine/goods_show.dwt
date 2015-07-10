@@ -37,7 +37,7 @@
  <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
  
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
-<script type="text/javascript" src="__TPL__/js/listtable.js"></script> 
+<script type="text/javascript" src="__TPL__/js/listtable.js{$js_css_version}"></script> 
 </div>
 </body>
 </html>
