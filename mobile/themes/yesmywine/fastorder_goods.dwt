@@ -3,13 +3,13 @@
  <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg">
   <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> 
   <span>{$title}</span> 
-  <a href="javascript:;"  onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
+  <a href="javascript:;"   class="pull-right ect-icon ect-icon1 ect-icon-mune icon-write"></a>
   </header>
-  <nav class="ect-nav ect-nav-list" style="display:none;"> 
+  <nav class="ect-nav ect-nav-list" > 
    <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
   </nav>
   
-   <div class="top_menu_m50" style="margin-top: 50px;">
+   <div class="" style="">
    <!--{if $act eq 'add_goods'} 新增产品-->
   		 <!-- #BeginLibraryItem "/library/goods_add.lbi" --><!-- #EndLibraryItem --> </div>
 	 </div>

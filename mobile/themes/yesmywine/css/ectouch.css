@@ -339,7 +339,7 @@ del {
 }
 /*颜色版本*/
 .ect-bg {
-	background: #BB0F2E !important;
+	background: #eb008b  !important;
 	color: #fff !important;
 	height: auto;
 	overflow: hidden;
@@ -3123,7 +3123,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 .inputbox input {
 	width:80%;
 	font-size:16px;
-	height:40px;
+	height:37px;
 	line-height:40px;
 	color:#818181;
 	margin:0 0 0 40px;
@@ -3148,7 +3148,7 @@ input,button,label,a,.modify {/*安卓去除点击热区*/
 	height:40px;
 	text-align:center;
 	margin:10px 0 0 0;
-	display: inline-flex;
+	display: flex;
 }
 .btn_0 {
 	width:100%;
@@ -3305,9 +3305,9 @@ textarea.jjtext {
 	width:30px;
 	height:30px;
 	display: inline-block;
-	position:absolute;
+	/*position:absolute;
 	top:0;
-	left:0;
+	left:0;*/
 }
 .integral_checkbox {
 	display: none;
@@ -3329,33 +3329,20 @@ textarea.jjtext {
 }
 .linktitle {
 	display: inline-block;
-	width:240px;
-	font-size:16px;
-	line-height: 30px;
-	color:#818181;
-	white-space: nowrap;
-	overflow: hidden;
-	margin:0 0 0 40px;
-	position:relative;
+	
+	font-size:1em;	
+	white-space: nowrap;	
+	margin:auto;
+	
 }
 .linkprice {
-	font-size:14px;
-	line-height: 30px;
-	color:#9a9a9a;
-	margin:0 0 0 10px;
-	position:absolute;
-	
-	top:0;
+	font-size:1em;
+	margin:auto;
 }
 
 .linknumber {
-	font-size:14px;
-	line-height: 30px;
-	color:#9a9a9a;
-	margin:0 0 0 10px;
-	position:absolute;
-	right:0;
-	top:0;
+	font-size:1em;
+	margin:auto;
 }
 .btn_linkbox {
 	width:100%;

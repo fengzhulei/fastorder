@@ -1,14 +1,16 @@
 <div class="con">
   <div class="ect-bg">
      <!--{if $smarty.session.user_id gt 0}-->
-      <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;" onClick="openMune()" class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header> 
-    <nav class="ect-nav ect-nav-list" style="display:none;"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
+      <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;"  class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header> 
+    <nav class="ect-nav ect-nav-list" > <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
+  </div>
+  <div class="flow-checkout ">
     <!--{else}-->
    <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> <a href="javascript:;"  class="pull-right ect-icon ect-icon1 ect-icon-mune"></a></header>
-   
-    <!--{/if }-->
   </div>
-  <div class="flow-checkout top_menu_m50">
+  <div class="flow-checkout top_menu_m50">  
+    <!--{/if }-->
+ 
     <form action="{:url('flow/doneorder')}" method="post" name="theForm" id="theForm" onSubmit="return checkOrderForm(this)">
       
      <div class="ect-bg-colorf flow-consignee">
