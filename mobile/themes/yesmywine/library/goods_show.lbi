@@ -44,41 +44,42 @@
 	      <input type="hidden" id ="user_id" name="user_id" value="{$user_id}" />
 	    	<table style="width: 100%;">
 			 
-			   <tr  class="linkdetailbox">			   
-				<th style="width: 20%;">
+			   <!--<tr  class="linkdetailbox">-->
+			   <tr>			   
+				<th style="width: 10%;">
 				      <span class="select_integral">
 					      <input id="checkbox-all" onclick='listTable.selectAll(this, "checkboxes")' type="checkbox" class="integral_checkbox" />
 					      <label for="checkbox-all"></label>		      
 					  </span>
 				  </th>
-				  <th >
-				     <span class="linktitle">{$lang.goods_name}</span>
+				  <th style="width: 40%;" >
+				     <span class="">{$lang.goods_name}</span>
 				   </th>
-				   <th  >		    
-				     <span class="linkprice">{$lang.goods_price}({$lang.unit_yuan})</span>
+				   <th style="width: 30%;" >		    
+				     <span class="">{$lang.goods_price}({$lang.unit_yuan})</span>
 				   </th>
-				   <th >
-				     <span class="linknumber">{$lang.number}</span>
+				   <th style="width: 20%;">
+				     <span class="">{$lang.number}</span>
 				   </th>
 				</tr>   
 		    <!--{foreach from=$goods_list item=goods}-->
 			    <tr class="linkdetailbox">	
-			    <td style="width: 20%;">		    
+			    <td style="width: 10%;">		    
 				    <span class="select_integral">
 		                <input type="checkbox" name="checkboxes[]" id="checkbox-{$goods.goods_id}" value="{$goods.goods_id}"  class="integral_checkbox" >
 		                <label for="checkbox-{$goods.goods_id}"></label>
 		            </span>	 
 		         </td>
-	       		 <td style="width: 30%;">            
-		            <span class="linktitle">{$goods.goods_name|escape:html}</span>	
+	       		 <td style="width: 40%;">            
+		            <span class="">{$goods.goods_name|escape:html}</span>	
 		         </td>
 	        	 <td style="width: 30%;">            
-		            <span class="linkprice">{$goods.goods_price}</span>	
+		            <span class="">{$goods.goods_price}</span>	
 		          </td>
 	         	 <td style="width: 20%;"> 
-		            <div class="linknumber">
-		            <input type="text" name="goods_number_{$goods.goods_id}" id="goods_number_{$goods.goods_id}" value="1"></input>
-		            </div>	
+		            
+		            <input type="text" style="width: 100%;" name="goods_number_{$goods.goods_id}" id="goods_number_{$goods.goods_id}" value="1"></input>
+		           	
 		          </td>	 
 		          </tr> 
 		    <!--{/foreach}--> 
