@@ -669,7 +669,7 @@ class WechatController extends CommonController
             {
             	 $flag = I('get.flag');
             }           
-            if (self::is_wechat_browser() && $_SESSION['user_id'] === 0 && $flag == 'oauth') {
+            if (self::is_wechat_browser() && empty($_SESSION['user_id']) && $flag == 'oauth') {
                 if (! isset($_SESSION['redirect_url'])) {
                     session('redirect_url', __HOST__ . $_SERVER['REQUEST_URI']);
                 }

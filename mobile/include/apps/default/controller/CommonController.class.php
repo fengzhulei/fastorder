@@ -28,14 +28,14 @@ class CommonController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        
+        $this->ecshop_init();
         // 微信oauth处理
         if(class_exists('WechatController')){
             if (method_exists('WechatController', 'do_oauth')) {
                 call_user_func(array('WechatController', 'do_oauth'));
             }
         }
-        $this->ecshop_init();
+      
         /* 语言包 */
         $this->assign('lang', L());
         /* 页面标题 */
@@ -177,7 +177,7 @@ class CommonController extends BaseController
 		          {
 		          	$flag = 'oauth';
 		          	call_user_func(array('WechatController', 'do_oauth'),$flag);
-	                /*
+
 		          	$_SESSION['user_id'] = 0;
 	                $_SESSION['user_name'] = '';
 	                $_SESSION['email'] = '';
@@ -188,7 +188,7 @@ class CommonController extends BaseController
 	                $time = time() - 3600;
 	                setcookie("ECS[user_id]", '', $time, '/');
 	                setcookie("ECS[message_id]", '', $time, '/');
-	                */
+	                
             	}
             //}
         }
