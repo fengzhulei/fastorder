@@ -17,8 +17,7 @@
 <!-- #BeginLibraryItem "/library/goods_show.lbi" --><!-- #EndLibraryItem -->
  </div>
  <!--{if $act eq 'goods_select'}-->
-  <div id="tipsmsg" style="margin-right: 5px; text-align:center;margin-top:2em"  class="co"></div>
-  <div class="btnbox">
+ <div class="btnbox">
     	<button class="btn_0" onclick='listTable.generateLink("listForm","send")'>
         	<span class="text">生成链接</span>
         </button>
@@ -31,10 +30,12 @@
 	</tr>
  </table>
  -->
- <!--{elseif $act eq 'goods_show'}-->  
+ <!--{elseif $act eq 'goods_show'}--> 
+ <div id="tipsmsg" style="margin-right: 5px; text-align:center;"  class="co"></div> 
   <!-- #BeginLibraryItem "/library/fastorder_consignee.lbi" --><!-- #EndLibraryItem -->
  <!--{/if}-->
-<footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+ 
+ <footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
  
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
 <script type="text/javascript" src="__TPL__/js/listtable.js{$js_css_version}"></script> 

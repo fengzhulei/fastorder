@@ -51,13 +51,13 @@
 					      <label for="checkbox-all"></label>		      
 					  </span>
 				  </th>
-				  <th style="width: 40%;">
+				  <th >
 				     <span class="linktitle">{$lang.goods_name}</span>
 				   </th>
-				   <th style="width: 20%;">		    
+				   <th  >		    
 				     <span class="linkprice">{$lang.goods_price}({$lang.unit_yuan})</span>
 				   </th>
-				   <th style="width: 20%;">
+				   <th >
 				     <span class="linknumber">{$lang.number}</span>
 				   </th>
 				</tr>   
